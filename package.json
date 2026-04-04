@@ -1,0 +1,24 @@
+{
+  "name": "credit-risk-system",
+  "version": "1.0.0",
+  "description": "信用风险预测系统前端",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4",
+    "element-plus": "^2.3.8",
+    "@element-plus/icons-vue": "^2.1.0",
+    "echarts": "^5.4.2",
+    "vue-echarts": "^6.6.1",
+    "@amap/amap-jsapi-loader": "^1.0.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.5"
+  }
+}
