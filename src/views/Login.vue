@@ -32,6 +32,24 @@
           />
         </el-form-item>
         
+        <!-- 企业用户专属：行业选择 -->
+        <el-form-item prop="industry" v-if="loginForm.userType === 'enterprise'">
+          <el-select v-model="loginForm.industry" placeholder="请选择行业类型" size="large" style="width: 100%">
+            <el-option label="信息技术" value="信息技术" />
+            <el-option label="金融服务" value="金融服务" />
+            <el-option label="制造业" value="制造业" />
+            <el-option label="旅游服务" value="旅游服务" />
+            <el-option label="房地产" value="房地产" />
+            <el-option label="医疗健康" value="医疗健康" />
+            <el-option label="教育培训" value="教育培训" />
+            <el-option label="批发零售" value="批发零售" />
+            <el-option label="交通运输" value="交通运输" />
+            <el-option label="农业" value="农业" />
+            <el-option label="能源" value="能源" />
+            <el-option label="其他" value="其他" />
+          </el-select>
+        </el-form-item>
+        
         <el-form-item prop="userType" v-if="!targetUserType">
           <el-select v-model="loginForm.userType" placeholder="请选择用户类型" size="large" style="width: 100%">
             <el-option label="个人用户" value="personal" />
@@ -49,9 +67,13 @@
         </el-form-item>
         
         <el-form-item v-if="targetUserType">
-          <el-button type="default" size="large" style="width: 100%" @click="goBackToHome">
+          <el-button type="default" size="default" style="width: 100%" @click="goBackToHome">
             返回首页
           </el-button>
+          <div class="login-actions">
+            <span class="action-text" @click="goToRegister">注册账号</span>
+            <span class="action-text" @click="goToForgotPassword">忘记密码</span>
+          </div>
         </el-form-item>
       </el-form>
       
@@ -77,7 +99,8 @@ export default {
     const loginForm = ref({
       username: '',
       password: '',
-      userType: ''
+      userType: '',
+      industry: ''
     })
     
     const loginRules = {
@@ -89,6 +112,9 @@ export default {
       ],
       userType: [
         { required: true, message: '请选择用户类型', trigger: 'change' }
+      ],
+      industry: [
+        { required: true, message: '请选择行业类型', trigger: 'change' }
       ]
     }
     
@@ -137,6 +163,18 @@ export default {
     const goBackToHome = () => {
       localStorage.removeItem('targetUserType')
       router.push('/')
+    }
+    
+    const goToRegister = () => {
+      ElMessage.info('注册账号功能开发中...')
+      // 这里可以跳转到注册页面
+      // router.push('/register')
+    }
+    
+    const goToForgotPassword = () => {
+      ElMessage.info('忘记密码功能开发中...')
+      // 这里可以跳转到忘记密码页面
+      // router.push('/forgot-password')
     }
     
     onMounted(() => {
@@ -209,5 +247,25 @@ export default {
   text-align: center;
   color: #999;
   font-size: 12px;
+}
+
+.login-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.action-text {
+  font-size: 12px;
+  color: #409eff;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.action-text:hover {
+  color: #66b1ff;
+  text-decoration: underline;
 }
 </style>

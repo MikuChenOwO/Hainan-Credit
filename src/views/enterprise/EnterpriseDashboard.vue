@@ -49,9 +49,13 @@
     <div class="function-cards">
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'risk'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'risk' }"
+            @click="activeTab = 'risk'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#E6A23C"><Warning /></el-icon>
+              <el-icon size="48" :color="activeTab === 'risk' ? '#E6A23C' : '#E6A23C'"><Warning /></el-icon>
               <h3>风险预测</h3>
               <p>企业信用风险评估</p>
             </div>
@@ -59,9 +63,13 @@
         </el-col>
         
         <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'finance'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'finance' }"
+            @click="activeTab = 'finance'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#409EFF"><Money /></el-icon>
+              <el-icon size="48" :color="activeTab === 'finance' ? '#409EFF' : '#409EFF'"><Money /></el-icon>
               <h3>财务分析</h3>
               <p>财务报表分析</p>
             </div>
@@ -69,9 +77,13 @@
         </el-col>
         
         <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'monitor'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'monitor' }"
+            @click="activeTab = 'monitor'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#67C23A"><Monitor /></el-icon>
+              <el-icon size="48" :color="activeTab === 'monitor' ? '#67C23A' : '#67C23A'"><Monitor /></el-icon>
               <h3>风险监控</h3>
               <p>实时风险监控</p>
             </div>
@@ -79,9 +91,13 @@
         </el-col>
         
         <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'report'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'report' }"
+            @click="activeTab = 'report'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#909399"><Document /></el-icon>
+              <el-icon size="48" :color="activeTab === 'report' ? '#909399' : '#909399'"><Document /></el-icon>
               <h3>信用报告</h3>
               <p>生成信用报告</p>
             </div>
@@ -92,27 +108,25 @@
 
     <!-- 内容区域 -->
     <div class="content-area">
-      <el-tabs v-model="activeTab" type="card">
-        <!-- 风险预测标签页 -->
-        <el-tab-pane label="风险预测" name="risk">
-          <EnterpriseRiskPrediction />
-        </el-tab-pane>
-        
-        <!-- 财务分析标签页 -->
-        <el-tab-pane label="财务分析" name="finance">
-          <EnterpriseFinancialAnalysis />
-        </el-tab-pane>
-        
-        <!-- 风险监控标签页 -->
-        <el-tab-pane label="风险监控" name="monitor">
-          <EnterpriseRiskMonitoring />
-        </el-tab-pane>
-        
-        <!-- 信用报告标签页 -->
-        <el-tab-pane label="信用报告" name="report">
-          <EnterpriseCreditReport />
-        </el-tab-pane>
-      </el-tabs>
+      <!-- 风险预测内容 -->
+      <div v-show="activeTab === 'risk'">
+        <EnterpriseRiskPrediction />
+      </div>
+      
+      <!-- 财务分析内容 -->
+      <div v-show="activeTab === 'finance'">
+        <EnterpriseFinancialAnalysis />
+      </div>
+      
+      <!-- 风险监控内容 -->
+      <div v-show="activeTab === 'monitor'">
+        <EnterpriseRiskMonitoring />
+      </div>
+      
+      <!-- 信用报告内容 -->
+      <div v-show="activeTab === 'report'">
+        <EnterpriseCreditReport />
+      </div>
     </div>
 
     <!-- 编辑企业信息对话框 -->
@@ -453,6 +467,22 @@ export default {
 .function-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.function-card.active {
+  border: 2px solid #409EFF;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f3ff 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(64, 158, 255, 0.2);
+}
+
+.function-card.active .card-content h3 {
+  color: #409EFF;
+  font-weight: 600;
+}
+
+.function-card.active .card-content p {
+  color: #606266;
 }
 
 .card-content {

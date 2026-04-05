@@ -63,9 +63,13 @@
     <div class="function-cards">
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'monitor'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'monitor' }"
+            @click="activeTab = 'monitor'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#409EFF"><Monitor /></el-icon>
+              <el-icon size="48" :color="activeTab === 'monitor' ? '#409EFF' : '#409EFF'"><Monitor /></el-icon>
               <h3>风险监控</h3>
               <p>企业风险实时监控</p>
             </div>
@@ -73,9 +77,13 @@
         </el-col>
         
         <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'push'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'push' }"
+            @click="activeTab = 'push'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#67C23A"><Promotion /></el-icon>
+              <el-icon size="48" :color="activeTab === 'push' ? '#67C23A' : '#67C23A'"><Promotion /></el-icon>
               <h3>定向推送</h3>
               <p>优质企业推荐</p>
             </div>
@@ -83,9 +91,13 @@
         </el-col>
         
         <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'analysis'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'analysis' }"
+            @click="activeTab = 'analysis'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#E6A23C"><DataAnalysis /></el-icon>
+              <el-icon size="48" :color="activeTab === 'analysis' ? '#E6A23C' : '#E6A23C'"><DataAnalysis /></el-icon>
               <h3>行业分析</h3>
               <p>行业风险分析</p>
             </div>
@@ -93,9 +105,13 @@
         </el-col>
         
         <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'report'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'report' }"
+            @click="activeTab = 'report'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#909399"><Document /></el-icon>
+              <el-icon size="48" :color="activeTab === 'report' ? '#909399' : '#909399'"><Document /></el-icon>
               <h3>监管报告</h3>
               <p>生成监管报告</p>
             </div>
@@ -106,27 +122,25 @@
 
     <!-- 内容区域 -->
     <div class="content-area">
-      <el-tabs v-model="activeTab" type="card">
-        <!-- 风险监控标签页 -->
-        <el-tab-pane label="风险监控" name="monitor">
-          <RiskMonitoring />
-        </el-tab-pane>
-        
-        <!-- 定向推送标签页 -->
-        <el-tab-pane label="定向推送" name="push">
-          <TargetedPush />
-        </el-tab-pane>
-        
-        <!-- 行业分析标签页 -->
-        <el-tab-pane label="行业分析" name="analysis">
-          <IndustryAnalysis />
-        </el-tab-pane>
-        
-        <!-- 监管报告标签页 -->
-        <el-tab-pane label="监管报告" name="report">
-          <SupervisionReport />
-        </el-tab-pane>
-      </el-tabs>
+      <!-- 风险监控内容 -->
+      <div v-show="activeTab === 'monitor'">
+        <RiskMonitoring />
+      </div>
+      
+      <!-- 定向推送内容 -->
+      <div v-show="activeTab === 'push'">
+        <TargetedPush />
+      </div>
+      
+      <!-- 行业分析内容 -->
+      <div v-show="activeTab === 'analysis'">
+        <IndustryAnalysis />
+      </div>
+      
+      <!-- 监管报告内容 -->
+      <div v-show="activeTab === 'report'">
+        <SupervisionReport />
+      </div>
     </div>
   </div>
 </template>
@@ -229,6 +243,22 @@ export default {
 .function-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.function-card.active {
+  border: 2px solid #409EFF;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f3ff 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(64, 158, 255, 0.2);
+}
+
+.function-card.active .card-content h3 {
+  color: #409EFF;
+  font-weight: 600;
+}
+
+.function-card.active .card-content p {
+  color: #606266;
 }
 
 .card-content {

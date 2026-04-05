@@ -12,9 +12,13 @@
     <div class="function-cards">
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-card class="function-card" @click="activeTab = 'profile'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'profile' }"
+            @click="activeTab = 'profile'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#409EFF"><User /></el-icon>
+              <el-icon size="48" :color="activeTab === 'profile' ? '#409EFF' : '#409EFF'"><User /></el-icon>
               <h3>用户画像</h3>
               <p>查看您的多维信用画像</p>
             </div>
@@ -22,9 +26,13 @@
         </el-col>
         
         <el-col :span="8">
-          <el-card class="function-card" @click="activeTab = 'risk'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'risk' }"
+            @click="activeTab = 'risk'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#E6A23C"><Warning /></el-icon>
+              <el-icon size="48" :color="activeTab === 'risk' ? '#E6A23C' : '#E6A23C'"><Warning /></el-icon>
               <h3>风险预测</h3>
               <p>进行信用风险评估</p>
             </div>
@@ -32,9 +40,13 @@
         </el-col>
         
         <el-col :span="8">
-          <el-card class="function-card" @click="activeTab = 'history'">
+          <el-card 
+            class="function-card" 
+            :class="{ 'active': activeTab === 'history' }"
+            @click="activeTab = 'history'"
+          >
             <div class="card-content">
-              <el-icon size="48" color="#67C23A"><Clock /></el-icon>
+              <el-icon size="48" :color="activeTab === 'history' ? '#67C23A' : '#67C23A'"><Clock /></el-icon>
               <h3>历史记录</h3>
               <p>查看评估历史记录</p>
             </div>
@@ -45,22 +57,20 @@
 
     <!-- 内容区域 -->
     <div class="content-area">
-      <el-tabs v-model="activeTab" type="card">
-        <!-- 用户画像标签页 -->
-        <el-tab-pane label="用户画像" name="profile">
-          <UserProfile />
-        </el-tab-pane>
-        
-        <!-- 风险预测标签页 -->
-        <el-tab-pane label="风险预测" name="risk">
-          <RiskPrediction />
-        </el-tab-pane>
-        
-        <!-- 历史记录标签页 -->
-        <el-tab-pane label="历史记录" name="history">
-          <HistoryRecords />
-        </el-tab-pane>
-      </el-tabs>
+      <!-- 用户画像内容 -->
+      <div v-show="activeTab === 'profile'">
+        <UserProfile />
+      </div>
+      
+      <!-- 风险预测内容 -->
+      <div v-show="activeTab === 'risk'">
+        <RiskPrediction />
+      </div>
+      
+      <!-- 历史记录内容 -->
+      <div v-show="activeTab === 'history'">
+        <HistoryRecords />
+      </div>
     </div>
   </div>
 </template>
@@ -122,6 +132,22 @@ export default {
 .function-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.function-card.active {
+  border: 2px solid #409EFF;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f3ff 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(64, 158, 255, 0.2);
+}
+
+.function-card.active .card-content h3 {
+  color: #409EFF;
+  font-weight: 600;
+}
+
+.function-card.active .card-content p {
+  color: #606266;
 }
 
 .card-content {

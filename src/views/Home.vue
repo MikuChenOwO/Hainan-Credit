@@ -358,19 +358,18 @@
       <div class="footer-content">
         <div class="footer-section">
           <h5>海南省信用风险预测系统</h5>
-          <p>基于AI技术的智能信用评估与风险预测平台</p>
         </div>
         
         <div class="footer-section">
           <h6>联系我们</h6>
           <p>电话：0898-XXXXXXX</p>
           <p>邮箱：contact@hainan-credit.gov.cn</p>
-          <p>地址：海南省海口市美兰区</p>
+          <p>地址：海南省三亚市</p>
         </div>
         
         <div class="footer-section">
           <h6>技术支持</h6>
-          <p>海南省金融科技实验室</p>
+          <p>哈尔滨工程大学大数据与智能商务技术工信部重点实验室</p>
           <p>版本：v2.1.0</p>
         </div>
       </div>

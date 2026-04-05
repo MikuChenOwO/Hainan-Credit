@@ -81,41 +81,28 @@
           </el-upload>
         </el-form-item>
         
-        <el-form-item label="参数配置" prop="parameters">
-          <div class="parameters-editor">
-            <el-button @click="addParameter" type="primary" link>添加参数</el-button>
-            <el-table :data="uploadForm.parameters" style="width: 100%">
-              <el-table-column prop="name" label="参数名" width="150">
-                <template #default="{ row, $index }">
-                  <el-input v-model="row.name" placeholder="参数名称" />
-                </template>
-              </el-table-column>
-              <el-table-column prop="type" label="类型" width="120">
-                <template #default="{ row, $index }">
-                  <el-select v-model="row.type" placeholder="类型">
-                    <el-option label="数值" value="number" />
-                    <el-option label="字符串" value="string" />
-                    <el-option label="布尔" value="boolean" />
-                    <el-option label="数组" value="array" />
-                  </el-select>
-                </template>
-              </el-table-column>
-              <el-table-column prop="defaultValue" label="默认值" width="150">
-                <template #default="{ row, $index }">
-                  <el-input v-model="row.defaultValue" placeholder="默认值" />
-                </template>
-              </el-table-column>
-              <el-table-column prop="description" label="描述">
-                <template #default="{ row, $index }">
-                  <el-input v-model="row.description" placeholder="参数描述" />
-                </template>
-              </el-table-column>
-              <el-table-column label="操作" width="80">
-                <template #default="{ $index }">
-                  <el-button @click="removeParameter($index)" type="danger" link>删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+        <el-form-item label="评估指标" prop="metrics">
+          <div class="metrics-display">
+            <el-descriptions :column="2" border>
+              <el-descriptions-item label="准确率 (ACC)">
+                <el-tag type="success">0.85</el-tag>
+              </el-descriptions-item>
+              <el-descriptions-item label="精确率 (Precision)">
+                <el-tag type="success">0.82</el-tag>
+              </el-descriptions-item>
+              <el-descriptions-item label="召回率 (Recall)">
+                <el-tag type="warning">0.78</el-tag>
+              </el-descriptions-item>
+              <el-descriptions-item label="F1分数">
+                <el-tag type="success">0.80</el-tag>
+              </el-descriptions-item>
+              <el-descriptions-item label="AUC值">
+                <el-tag type="success">0.89</el-tag>
+              </el-descriptions-item>
+              <el-descriptions-item label="平均精度均值 (mAP)">
+                <el-tag type="warning">0.75</el-tag>
+              </el-descriptions-item>
+            </el-descriptions>
           </div>
         </el-form-item>
         
@@ -188,7 +175,7 @@ export default {
       version: '',
       scenario: [],
       description: '',
-      parameters: []
+      metrics: {}
     })
 
     const submitting = ref(false)
@@ -308,18 +295,7 @@ export default {
       ElMessage.error('文件上传失败')
     }
 
-    const addParameter = () => {
-      uploadForm.value.parameters.push({
-        name: '',
-        type: 'number',
-        defaultValue: '',
-        description: ''
-      })
-    }
 
-    const removeParameter = (index) => {
-      uploadForm.value.parameters.splice(index, 1)
-    }
 
     const handleSubmit = async () => {
       if (!uploadFormRef.value) return
@@ -367,7 +343,7 @@ export default {
         version: '',
         scenario: [],
         description: '',
-        parameters: []
+        metrics: {}
       }
       fileList.value = []
     }
@@ -408,8 +384,6 @@ export default {
       beforeUpload,
       handleSuccess,
       handleError,
-      addParameter,
-      removeParameter,
       handleSubmit,
       handleReset,
       handleSaveDraft,
@@ -434,7 +408,7 @@ export default {
   width: 100%;
 }
 
-.parameters-editor {
+.metrics-display {
   border: 1px solid #e6e6e6;
   border-radius: 4px;
   padding: 15px;
@@ -453,4 +427,10 @@ export default {
   margin-top: 20px;
   text-align: right;
 }
+
+
+
+
+
+
 </style>
