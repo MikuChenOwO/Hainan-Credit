@@ -1,6 +1,5 @@
 <template>
   <div class="research-dashboard">
-    <!-- 欢迎区域 -->
     <el-card class="welcome-card">
       <div class="welcome-content">
         <h2>科研算法中心</h2>
@@ -8,7 +7,6 @@
       </div>
     </el-card>
 
-    <!-- 统计概览 -->
     <el-row :gutter="20" class="stats-overview">
       <el-col :span="6">
         <el-card class="stat-card">
@@ -21,7 +19,7 @@
           </div>
         </el-card>
       </el-col>
-      
+
       <el-col :span="6">
         <el-card class="stat-card">
           <div class="stat-content">
@@ -33,7 +31,7 @@
           </div>
         </el-card>
       </el-col>
-      
+
       <el-col :span="6">
         <el-card class="stat-card">
           <div class="stat-content">
@@ -45,7 +43,7 @@
           </div>
         </el-card>
       </el-col>
-      
+
       <el-col :span="6">
         <el-card class="stat-card">
           <div class="stat-content">
@@ -59,114 +57,67 @@
       </el-col>
     </el-row>
 
-    <!-- 功能卡片区域 -->
-    <div class="function-cards">
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'composer'">
-            <div class="card-content">
-              <el-icon size="48" color="#8A2BE2"><Star /></el-icon>
-              <h3>算法组合器</h3>
-              <p>拖拽式算法构建</p>
-            </div>
-          </el-card>
-        </el-col>
-        
-        <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'upload'">
-            <div class="card-content">
-              <el-icon size="48" color="#409EFF"><Upload /></el-icon>
-              <h3>算法上传</h3>
-              <p>上传新的风险算法</p>
-            </div>
-          </el-card>
-        </el-col>
-        
-        <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'manage'">
-            <div class="card-content">
-              <el-icon size="48" color="#67C23A"><Setting /></el-icon>
-              <h3>算法管理</h3>
-              <p>管理已有算法</p>
-            </div>
-          </el-card>
-        </el-col>
-        
-        <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'test'">
-            <div class="card-content">
-              <el-icon size="48" color="#E6A23C"><Search /></el-icon>
-              <h3>算法测试</h3>
-              <p>测试算法性能</p>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
-
-    <!-- 内容区域 -->
     <div class="content-area">
-      <el-tabs v-model="activeTab" type="card">
-        <!-- 算法组合器标签页 -->
-        <el-tab-pane label="算法组合器" name="composer">
-          <AlgorithmComposer />
-        </el-tab-pane>
-        
-        <!-- 算法上传标签页 -->
-        <el-tab-pane label="算法上传" name="upload">
-          <AlgorithmUpload />
-        </el-tab-pane>
-        
-        <!-- 算法管理标签页 -->
-        <el-tab-pane label="算法管理" name="manage">
-          <div class="placeholder-content">
-            <h3>算法管理</h3>
-            <p>算法管理功能开发中...</p>
-          </div>
-        </el-tab-pane>
-        
-        <!-- 算法测试标签页 -->
-        <el-tab-pane label="算法测试" name="test">
-          <div class="placeholder-content">
-            <h3>算法测试</h3>
-            <p>算法测试功能开发中...</p>
-          </div>
-        </el-tab-pane>
-      </el-tabs>
+      <div v-show="activeTab === 'composer'">
+        <AlgorithmComposer />
+      </div>
+
+      <div v-show="activeTab === 'upload'">
+        <AlgorithmUpload />
+      </div>
+
+      <div v-show="activeTab === 'manage'">
+        <div class="placeholder-content">
+          <h3>算法管理</h3>
+          <p>算法管理功能开发中...</p>
+        </div>
+      </div>
+
+      <div v-show="activeTab === 'test'">
+        <div class="placeholder-content">
+          <h3>算法测试</h3>
+          <p>算法测试功能开发中...</p>
+        </div>
+      </div>
+
+      <div v-show="activeTab === 'data'">
+        <ResearchDataWorkbench />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { Check, Clock, Cpu, DataLine } from '@element-plus/icons-vue'
 import AlgorithmUpload from './components/AlgorithmUpload.vue'
 import AlgorithmComposer from './components/AlgorithmComposer.vue'
-import { Cpu, Check, Clock, DataLine, Star, Upload, Setting, Search } from '@element-plus/icons-vue'
+import ResearchDataWorkbench from './components/ResearchDataWorkbench.vue'
+import { useFeatureAccess } from '@/composables/useFeatureAccess'
+import { getFeatureItems } from '@/config/userAccess'
+
+const RESEARCH_FEATURES = getFeatureItems('research')
 
 export default {
   name: 'ResearchDashboard',
   components: {
-    AlgorithmUpload,
     AlgorithmComposer,
-    Cpu,
+    AlgorithmUpload,
     Check,
     Clock,
+    Cpu,
     DataLine,
-    Star,
-    Upload,
-    Setting,
-    Search
+    ResearchDataWorkbench
   },
   setup() {
-    const activeTab = ref('upload')
-    
-    const stats = ref({
+    const { activeTab } = useFeatureAccess('research', RESEARCH_FEATURES, 'upload')
+
+    const stats = {
       totalAlgorithms: 28,
       deployedAlgorithms: 15,
       testingAlgorithms: 5,
       totalPredictions: 125430
-    })
-    
+    }
+
     return {
       activeTab,
       stats
@@ -224,38 +175,6 @@ export default {
   font-size: 14px;
 }
 
-.function-cards {
-  margin-bottom: 20px;
-}
-
-.function-card {
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-  height: 165px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.function-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.card-content {
-  text-align: center;
-}
-
-.card-content h3 {
-  margin: 15px 0 10px;
-  color: #303133;
-}
-
-.card-content p {
-  color: #909399;
-  font-size: 14px;
-}
-
 .content-area {
   background: white;
   border-radius: 4px;
@@ -271,5 +190,11 @@ export default {
 .placeholder-content h3 {
   margin-bottom: 15px;
   color: #606266;
+}
+
+@media (max-width: 768px) {
+  .stat-card {
+    margin-bottom: 16px;
+  }
 }
 </style>
