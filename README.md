@@ -4,6 +4,15 @@
 
 海南省信用风险预测系统是一个基于人工智能技术的智能信用评估与风险预测平台。该系统利用先进的AI算法，对海南省企业信用风险进行精准预测和实时监控，为政府监管部门、企业和研究机构提供科学的决策依据。
 
+## 系统特色
+
+- 🎯 **多角色智能分析**: 支持个人、企业、政府、研究机构四种用户角色
+- 📊 **实时风险监控**: 基于ECharts的可视化风险分布地图
+- 🤖 **AI驱动预测**: 集成机器学习算法进行信用风险评估
+- 🗺️ **地理信息集成**: 结合高德地图API的地理位置风险分析
+- 📱 **响应式设计**: 适配桌面端和移动端设备
+- 🔒 **权限管理**: 基于角色的功能访问控制
+
 ## 功能特性
 
 ### 主要功能模块
@@ -26,20 +35,58 @@
    - 地理位置风险分布展示
    - 行业风险分析
 
+### 详细功能说明
+
+#### 个人用户功能
+- **个人信息管理**: 查看和编辑个人资料
+- **信用查询**: 实时查询个人信用评分
+- **历史记录**: 查看信用查询历史
+- **风险预测**: 基于AI算法的个人信用风险预测
+
+#### 企业用户功能
+- **企业信用报告**: 生成详细的企业信用评估报告
+- **财务分析**: 企业财务状况可视化分析
+- **风险监控**: 实时监控企业信用风险变化
+- **风险预测**: 基于历史数据的风险趋势预测
+
+#### 政府监管功能
+- **行业分析**: 按行业分类的风险统计分析
+- **风险监控**: 区域风险实时监控
+- **监管报告**: 自动生成监管报告
+- **精准推送**: 定向推送风险预警信息
+
+#### 科研人员功能
+- **算法编排**: 拖拽式算法流程编排
+- **算法上传**: 支持自定义算法上传
+- **模型训练**: 在线模型训练和测试
+
 ## 技术架构
 
 ### 前端技术栈
-- **Vue 3**: 现代化前端框架
-- **Vue Router**: 路由管理
-- **Element Plus**: UI组件库
-- **ECharts/Vue-ECharts**: 数据可视化
-- **高德地图API**: 地理位置服务
-- **Vite**: 构建工具
+- **Vue 3**: 现代化前端框架，使用Composition API
+- **Vue Router**: 路由管理，支持动态路由和权限控制
+- **Element Plus**: UI组件库，提供丰富的UI组件
+- **ECharts/Vue-ECharts**: 数据可视化，支持多种图表类型
+- **高德地图API**: 地理位置服务，集成地图展示功能
+- **Vite**: 构建工具，提供快速的开发体验
 
 ### 后端技术栈
-- **Flask**: Web框架
-- **PyEcharts**: Python图表库
-- **Flask-CORS**: 跨域支持
+- **Flask**: 轻量级Web框架，RESTful API设计
+- **PyEcharts**: Python图表库，后端数据可视化处理
+- **Flask-CORS**: 跨域支持，解决前后端分离的跨域问题
+
+### 系统架构图
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   前端应用层     │    │   后端服务层     │    │   数据服务层     │
+│                 │    │                 │    │                 │
+│ • Vue 3         │◄──►│ • Flask         │◄──►│ • 模拟数据       │
+│ • Element Plus  │    │ • PyEcharts     │    │ • 静态数据文件   │
+│ • ECharts       │    │ • RESTful API   │    │                 │
+│ • 高德地图API    │    │                 │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
 ## 系统截图
 
@@ -94,29 +141,75 @@ python app.py
 ```
 credit-risk-system/
 ├── backend/                 # 后端代码
-│   ├── app.py              # 主应用文件
-│   ├── requirements.txt    # Python依赖
-│   └── start_backend.py    # 启动脚本
+│   ├── app.py              # Flask主应用文件
+│   ├── requirements.txt    # Python依赖配置
+│   ├── start_backend.py    # 后端启动脚本
+│   └── test_app.py         # 后端测试文件
 ├── src/                    # 前端源码
-│   ├── views/              # 页面组件
-│   │   ├── Home.vue        # 首页
-│   │   ├── Login.vue       # 登录页
-│   │   ├── admin/          # 管理员仪表板
-│   │   ├── enterprise/     # 企业仪表板
-│   │   ├── government/     # 政府仪表板
-│   │   └── personal/       # 个人仪表板
+│   ├── composables/        # Vue组合式函数
+│   │   └── useFeatureAccess.js  # 功能权限控制
+│   ├── config/             # 配置文件
+│   │   └── userAccess.js   # 用户权限配置
+│   ├── map/                # 地图相关资源
+│   │   └── NB-Map.svg      # 海南省地图SVG
 │   ├── router/             # 路由配置
+│   │   └── index.js        # 路由定义
+│   ├── utils/              # 工具函数
+│   │   └── auth.js         # 认证工具
+│   ├── views/              # 页面组件
+│   │   ├── admin/          # 管理员仪表板
+│   │   │   └── AdminDashboard.vue
+│   │   ├── enterprise/     # 企业仪表板
+│   │   │   ├── components/ # 企业组件
+│   │   │   └── EnterpriseDashboard.vue
+│   │   ├── government/     # 政府仪表板
+│   │   │   ├── components/ # 政府组件
+│   │   │   └── GovernmentDashboard.vue
+│   │   ├── personal/       # 个人仪表板
+│   │   │   ├── components/ # 个人组件
+│   │   │   └── PersonalDashboard.vue
+│   │   ├── research/       # 研究仪表板
+│   │   │   ├── components/ # 研究组件
+│   │   │   └── ResearchDashboard.vue
+│   │   ├── Dashboard.vue   # 主仪表板
+│   │   ├── Home.vue        # 首页
+│   │   └── Login.vue       # 登录页
+│   ├── App.vue             # 根组件
 │   └── main.js             # 应用入口
 ├── public/                 # 静态资源
+├── dist/                   # 构建输出目录
 ├── package.json           # 前端依赖配置
-└── requirements.txt       # 后端依赖配置
+├── index.html             # HTML入口文件
+└── README.md              # 项目说明文档
 ```
 
 ## API接口
 
 ### 主要API
-- `GET /api/map/hainan`: 获取海南省信用风险分布地图数据
-- `GET /api/health`: 健康检查接口
+
+#### 地图数据接口
+- `GET /api/map/hainan`
+  - **功能**: 获取海南省信用风险分布地图数据
+  - **参数**: 无
+  - **返回**: ECharts地图配置数据
+
+#### 健康检查接口
+- `GET /api/health`
+  - **功能**: 后端服务健康状态检查
+  - **参数**: 无
+  - **返回**: 服务状态信息
+
+### API使用示例
+
+```javascript
+// 获取地图数据
+fetch('/api/map/hainan')
+  .then(response => response.json())
+  .then(data => {
+    // 使用ECharts渲染地图
+    chart.setOption(data);
+  });
+```
 
 ## 使用说明
 
@@ -128,14 +221,25 @@ credit-risk-system/
 ## 开发指南
 
 ### 前端开发
-- 组件化开发模式
-- 使用Element Plus组件库
-- 遵循Vue 3 Composition API规范
+- **组件化开发**: 使用Vue 3单文件组件(SFC)模式
+- **状态管理**: 使用Composition API进行状态管理
+- **路由配置**: 基于角色的动态路由权限控制
+- **UI组件**: 使用Element Plus组件库，保持界面一致性
+- **数据可视化**: 集成ECharts进行图表展示
+- **地图集成**: 使用高德地图API进行地理位置展示
 
 ### 后端开发
-- RESTful API设计
-- 使用Flask框架
-- 数据可视化处理
+- **API设计**: RESTful API规范，支持跨域请求
+- **框架选择**: Flask轻量级框架，易于扩展
+- **数据可视化**: 使用PyEcharts生成图表配置
+- **错误处理**: 统一的错误响应格式
+- **测试**: 使用Flask测试客户端进行接口测试
+
+### 代码规范
+- **前端**: 遵循Vue 3官方代码风格指南
+- **后端**: 遵循PEP 8 Python代码规范
+- **提交信息**: 使用约定式提交(Conventional Commits)
+- **文档**: 代码注释和README文档保持同步更新
 
 ## 项目特点
 
@@ -144,15 +248,3 @@ credit-risk-system/
 3. **AI驱动**: 利用机器学习算法进行风险预测
 4. **地理信息**: 结合地理位置的风险分析
 5. **响应式设计**: 适配不同设备屏幕
-
-## 贡献指南
-
-欢迎提交Issue和Pull Request来改进本项目。
-
-## 许可证
-
-本项目采用 MIT 许可证。
-
-## 联系方式
-
-如有问题或建议，请联系项目维护团队。

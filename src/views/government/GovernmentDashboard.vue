@@ -1,11 +1,5 @@
 <template>
   <div class="government-dashboard">
-    <el-card class="welcome-card">
-      <div class="welcome-content">
-        <h2>政府监管中心</h2>
-        <p>企业信用风险监控与定向推送管理平台</p>
-      </div>
-    </el-card>
 
     <el-row :gutter="20" class="stats-overview">
       <el-col :span="6">

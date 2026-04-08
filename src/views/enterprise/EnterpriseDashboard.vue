@@ -1,11 +1,5 @@
 <template>
   <div class="enterprise-dashboard">
-    <el-card class="welcome-card">
-      <div class="welcome-content">
-        <h2>企业信用中心</h2>
-        <p>基于 AI 技术的企业信用评估与风险监控</p>
-      </div>
-    </el-card>
 
     <el-card class="info-card">
       <template #header>

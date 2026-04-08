@@ -1,0 +1,157 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="2cc2d294-239e-d60f-13bb-73c91c174d77">
+    <mxGraphModel dx="1873" dy="1022" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" value="海南省信用风险预测系统 - 技术路线图" vertex="1">
+          <mxGeometry height="40" width="460" x="355" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="layer1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#f8f9fa;fontSize=18" value="技术架构层" vertex="1">
+          <mxGeometry height="180" width="1129" x="20" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="frontend" parent="layer1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingTop=4;fontSize=14;fontStyle=1" value="前端技术栈" vertex="1">
+          <mxGeometry height="26" width="120" x="10" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vue3" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=12;" value="Vue 3 (Composition API)" vertex="1">
+          <mxGeometry height="30" width="140" x="140" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="element-plus" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#4a148c;fontSize=12;" value="Element Plus UI" vertex="1">
+          <mxGeometry height="30" width="120" x="300" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="echarts" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#1b5e20;fontSize=12;" value="ECharts 可视化" vertex="1">
+          <mxGeometry height="30" width="120" x="440" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vite" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#e65100;fontSize=12;" value="Vite 构建工具" vertex="1">
+          <mxGeometry height="30" width="120" x="580" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="amap" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f2f1;strokeColor=#004d40;fontSize=12;" value="高德地图 API" vertex="1">
+          <mxGeometry height="30" width="120" x="720" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="backend" parent="layer1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingTop=4;fontSize=14;fontStyle=1" value="后端技术栈" vertex="1">
+          <mxGeometry height="26" width="120" x="10" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="flask" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffebee;strokeColor=#b71c1c;fontSize=12;" value="Flask 框架" vertex="1">
+          <mxGeometry height="30" width="100" x="140" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pyecharts" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#880e4f;fontSize=12;" value="PyEcharts" vertex="1">
+          <mxGeometry height="30" width="100" x="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cors" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#4a148c;fontSize=12;" value="Flask-CORS" vertex="1">
+          <mxGeometry height="30" width="100" x="380" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="data-layer" parent="layer1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingTop=4;fontSize=14;fontStyle=1" value="数据层" vertex="1">
+          <mxGeometry height="26" width="120" x="10" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="mock-data" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#1b5e20;fontSize=12;" value="模拟数据源" vertex="1">
+          <mxGeometry height="30" width="100" x="140" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="static-data" parent="layer1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#e65100;fontSize=12;" value="静态数据文件" vertex="1">
+          <mxGeometry height="30" width="100" x="260" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="layer2" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#f8f9fa;fontSize=18" value="开发流程层" vertex="1">
+          <mxGeometry height="200" width="1129" x="20" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="dev-stage" parent="layer2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingTop=4;fontSize=14;fontStyle=1" value="开发阶段" vertex="1">
+          <mxGeometry height="26" width="120" x="10" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="setup" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=12;" value="1. 环境配置" vertex="1">
+          <mxGeometry height="30" width="100" x="140" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="frontend-dev" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#4a148c;fontSize=12;" value="2. 前端开发" vertex="1">
+          <mxGeometry height="30" width="100" x="260" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="backend-dev" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#1b5e20;fontSize=12;" value="3. 后端开发" vertex="1">
+          <mxGeometry height="30" width="100" x="380" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="integration" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#e65100;fontSize=12;" value="4. 集成测试" vertex="1">
+          <mxGeometry height="30" width="100" x="500" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dev-tools" parent="layer2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingTop=4;fontSize=14;fontStyle=1" value="开发工具" vertex="1">
+          <mxGeometry height="26" width="120" x="10" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="vscode" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=12;" value="VS Code" vertex="1">
+          <mxGeometry height="30" width="80" x="140" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="git" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#4a148c;fontSize=12;" value="Git" vertex="1">
+          <mxGeometry height="30" width="60" x="240" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="npm" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#1b5e20;fontSize=12;" value="npm" vertex="1">
+          <mxGeometry height="30" width="60" x="320" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pip" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#e65100;fontSize=12;" value="pip" vertex="1">
+          <mxGeometry height="30" width="60" x="400" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="testing" parent="layer2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingTop=4;fontSize=14;fontStyle=1" value="测试策略" vertex="1">
+          <mxGeometry height="26" width="120" x="10" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="unit-test" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=12;" value="单元测试" vertex="1">
+          <mxGeometry height="30" width="80" x="140" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="api-test" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#4a148c;fontSize=12;" value="API测试" vertex="1">
+          <mxGeometry height="30" width="80" x="240" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ui-test" parent="layer2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#1b5e20;fontSize=12;" value="UI测试" vertex="1">
+          <mxGeometry height="30" width="80" x="340" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="layer3" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#f8f9fa;fontSize=18" value="部署策略层" vertex="1">
+          <mxGeometry height="180" width="1129" x="20" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="deploy-env" parent="layer3" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingTop=4;fontSize=14;fontStyle=1" value="部署环境" vertex="1">
+          <mxGeometry height="26" width="120" x="10" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dev-env" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=12;" value="开发环境" vertex="1">
+          <mxGeometry height="30" width="100" x="140" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="test-env" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#4a148c;fontSize=12;" value="测试环境" vertex="1">
+          <mxGeometry height="30" width="100" x="260" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="prod-env" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#1b5e20;fontSize=12;" value="生产环境" vertex="1">
+          <mxGeometry height="30" width="100" x="380" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="deploy-tools" parent="layer3" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingTop=4;fontSize=14;fontStyle=1" value="部署工具" vertex="1">
+          <mxGeometry height="26" width="120" x="10" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="vite-build" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=12;" value="Vite Build" vertex="1">
+          <mxGeometry height="30" width="100" x="140" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="nginx" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#4a148c;fontSize=12;" value="Nginx" vertex="1">
+          <mxGeometry height="30" width="80" x="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="docker" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#1b5e20;fontSize=12;" value="Docker" vertex="1">
+          <mxGeometry height="30" width="80" x="360" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="monitoring" parent="layer3" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingTop=4;fontSize=14;fontStyle=1" value="监控运维" vertex="1">
+          <mxGeometry height="26" width="120" x="10" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="log-monitor" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#e65100;fontSize=12;" value="日志监控" vertex="1">
+          <mxGeometry height="30" width="80" x="140" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="performance" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f2f1;strokeColor=#004d40;fontSize=12;" value="性能监控" vertex="1">
+          <mxGeometry height="30" width="80" x="240" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="security" parent="layer3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffebee;strokeColor=#b71c1c;fontSize=12;" value="安全监控" vertex="1">
+          <mxGeometry height="30" width="80" x="340" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="conn1" edge="1" parent="1" source="setup" style="endArrow=classic;html=1;rounded=0;" target="frontend-dev" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="190" y="50" as="sourcePoint" />
+            <mxPoint x="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn2" edge="1" parent="1" source="frontend-dev" style="endArrow=classic;html=1;rounded=0;" target="backend-dev" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="310" y="50" as="sourcePoint" />
+            <mxPoint x="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn3" edge="1" parent="1" source="backend-dev" style="endArrow=classic;html=1;rounded=0;" target="integration" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="430" y="50" as="sourcePoint" />
+            <mxPoint x="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

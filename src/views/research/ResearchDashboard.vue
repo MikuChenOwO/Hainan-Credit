@@ -1,11 +1,5 @@
 <template>
   <div class="research-dashboard">
-    <el-card class="welcome-card">
-      <div class="welcome-content">
-        <h2>科研算法中心</h2>
-        <p>信用风险算法研发、测试与部署平台</p>
-      </div>
-    </el-card>
 
     <el-row :gutter="20" class="stats-overview">
       <el-col :span="6">
