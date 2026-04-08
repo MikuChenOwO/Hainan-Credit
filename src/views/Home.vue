@@ -84,11 +84,6 @@
           <div class="video-container">
             <div class="video-header">
               <div class="video-title">海南省信用风险分布</div>
-              <div class="video-controls">
-                <button class="play-btn" id="playVideo">播放</button>
-                <button class="pause-btn" id="pauseVideo">暂停</button>
-                <button class="mute-btn" id="muteVideo">静音</button>
-              </div>
             </div>
             
             <div class="video-wrapper">
@@ -104,11 +99,7 @@
               </video>
             </div>
             
-            <div class="video-footer">
-               <div class="video-info">
-                 <span class="video-status" id="videoStatus">准备播放</span>
-               </div>
-             </div>
+
           </div>
         </div>
       </div>
@@ -368,68 +359,16 @@ export default {
      // 视频控制功能
       const initVideoControls = () => {
         const videoElement = document.getElementById('mapVideo')
-        const playBtn = document.getElementById('playVideo')
-        const pauseBtn = document.getElementById('pauseVideo')
-        const muteBtn = document.getElementById('muteVideo')
-        const videoStatus = document.getElementById('videoStatus')
         
         if (!videoElement) return
-        
-        // 更新状态显示
-        
-        const updateVideoInfo = () => {
-          if (videoStatus) {
-            if (videoElement.paused) {
-              videoStatus.textContent = '已暂停'
-            } else {
-              videoStatus.textContent = '播放中'
-            }
-          }
-        }
-       
-       // 播放按钮事件
-       if (playBtn) {
-         playBtn.addEventListener('click', () => {
-           videoElement.play()
-           updateVideoInfo()
-         })
-       }
-       
-       // 暂停按钮事件
-       if (pauseBtn) {
-         pauseBtn.addEventListener('click', () => {
-           videoElement.pause()
-           updateVideoInfo()
-         })
-       }
-       
-       // 静音按钮事件
-       if (muteBtn) {
-         muteBtn.addEventListener('click', () => {
-           videoElement.muted = !videoElement.muted
-           muteBtn.textContent = videoElement.muted ? '取消静音' : '静音'
-         })
-       }
-       
-       // 视频事件监听
-        videoElement.addEventListener('play', () => {
-          updateVideoInfo()
-        })
-        
-        videoElement.addEventListener('pause', () => {
-          updateVideoInfo()
-        })
        
        // 视频加载完成后自动播放
        videoElement.addEventListener('canplay', () => {
-         // 尝试自动播放，如果失败则显示播放按钮
+         // 尝试自动播放
          const playPromise = videoElement.play()
          if (playPromise !== undefined) {
            playPromise.catch(() => {
-             // 自动播放被阻止，显示播放按钮
-             if (videoStatus) {
-               videoStatus.textContent = '点击播放'
-             }
+             // 自动播放被阻止，静默处理
            })
          }
        })
