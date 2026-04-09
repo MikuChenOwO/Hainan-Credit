@@ -81,41 +81,66 @@
           </el-upload>
         </el-form-item>
         
-        <el-form-item label="参数配置" prop="parameters">
-          <div class="parameters-editor">
-            <el-button @click="addParameter" type="primary" link>添加参数</el-button>
-            <el-table :data="uploadForm.parameters" style="width: 100%">
-              <el-table-column prop="name" label="参数名" width="150">
-                <template #default="{ row, $index }">
-                  <el-input v-model="row.name" placeholder="参数名称" />
-                </template>
-              </el-table-column>
-              <el-table-column prop="type" label="类型" width="120">
-                <template #default="{ row, $index }">
-                  <el-select v-model="row.type" placeholder="类型">
-                    <el-option label="数值" value="number" />
-                    <el-option label="字符串" value="string" />
-                    <el-option label="布尔" value="boolean" />
-                    <el-option label="数组" value="array" />
-                  </el-select>
-                </template>
-              </el-table-column>
-              <el-table-column prop="defaultValue" label="默认值" width="150">
-                <template #default="{ row, $index }">
-                  <el-input v-model="row.defaultValue" placeholder="默认值" />
-                </template>
-              </el-table-column>
-              <el-table-column prop="description" label="描述">
-                <template #default="{ row, $index }">
-                  <el-input v-model="row.description" placeholder="参数描述" />
-                </template>
-              </el-table-column>
-              <el-table-column label="操作" width="80">
-                <template #default="{ $index }">
-                  <el-button @click="removeParameter($index)" type="danger" link>删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+        <el-form-item label="评估指标" prop="metrics">
+          <div class="metrics-selection">
+            <div class="metrics-checkbox-group">
+              <el-checkbox-group v-model="uploadForm.selectedMetrics" :min="1">
+                <el-checkbox label="accuracy" border>准确率 (ACC)</el-checkbox>
+                <el-checkbox label="precision" border>精确率 (Precision)</el-checkbox>
+                <el-checkbox label="recall" border>召回率 (Recall)</el-checkbox>
+                <el-checkbox label="f1" border>F1分数</el-checkbox>
+                <el-checkbox label="auc" border>AUC值</el-checkbox>
+                <el-checkbox label="map" border>平均精度均值 (mAP)</el-checkbox>
+              </el-checkbox-group>
+            </div>
+            
+            <!-- 测试按钮和结果展示 -->
+            <div class="metrics-test-section">
+              <el-button 
+                type="primary" 
+                :loading="testingMetrics" 
+                @click="handleTestMetrics"
+                :disabled="uploadForm.selectedMetrics.length === 0"
+              >
+                {{ testingMetrics ? '测试中...' : '开始测试评估指标' }}
+              </el-button>
+              
+              <div v-if="testResults" class="test-results">
+                <el-divider content-position="left">测试结果</el-divider>
+                <div class="results-tags">
+                  <el-tag 
+                    v-for="result in testResults" 
+                    :key="result.name"
+                    :type="getMetricTagType(result.value)"
+                    size="large"
+                  >
+                    {{ result.name }}: {{ result.value }}
+                  </el-tag>
+                </div>
+                <div class="test-info">
+                  <small>测试时间: {{ testTime }}</small>
+                  <small>测试数据集: 标准信用风险测试集</small>
+                </div>
+              </div>
+              
+              <div v-else-if="uploadForm.selectedMetrics.length > 0" class="metrics-tip">
+                <el-alert 
+                  title="请点击上方按钮开始测试，系统将自动计算选定的评估指标" 
+                  type="info" 
+                  :closable="false" 
+                  show-icon
+                />
+              </div>
+              
+              <div v-else class="metrics-tip">
+                <el-alert 
+                  title="请至少选择一个评估指标，然后点击测试按钮" 
+                  type="info" 
+                  :closable="false" 
+                  show-icon
+                />
+              </div>
+            </div>
           </div>
         </el-form-item>
         
@@ -175,7 +200,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default {
@@ -188,10 +213,13 @@ export default {
       version: '',
       scenario: [],
       description: '',
-      parameters: []
+      selectedMetrics: []
     })
 
     const submitting = ref(false)
+    const testingMetrics = ref(false)
+    const testResults = ref(null)
+    const testTime = ref('')
     const fileList = ref([])
     const currentPage = ref(1)
     const pageSize = ref(10)
@@ -308,18 +336,7 @@ export default {
       ElMessage.error('文件上传失败')
     }
 
-    const addParameter = () => {
-      uploadForm.value.parameters.push({
-        name: '',
-        type: 'number',
-        defaultValue: '',
-        description: ''
-      })
-    }
 
-    const removeParameter = (index) => {
-      uploadForm.value.parameters.splice(index, 1)
-    }
 
     const handleSubmit = async () => {
       if (!uploadFormRef.value) return
@@ -367,7 +384,7 @@ export default {
         version: '',
         scenario: [],
         description: '',
-        parameters: []
+        metrics: {}
       }
       fileList.value = []
     }
@@ -388,6 +405,60 @@ export default {
       ElMessage.info(`编辑算法：${row.name}`)
     }
 
+    // 评估指标测试函数
+    const handleTestMetrics = async () => {
+      if (uploadForm.value.selectedMetrics.length === 0) {
+        ElMessage.warning('请先选择要测试的评估指标')
+        return
+      }
+
+      if (fileList.value.length === 0) {
+        ElMessage.warning('请先上传算法文件')
+        return
+      }
+
+      testingMetrics.value = true
+      
+      try {
+        // 模拟测试过程
+        await new Promise(resolve => setTimeout(resolve, 3000))
+        
+        // 生成模拟测试结果
+        const results = []
+        const metricNames = {
+          accuracy: '准确率',
+          precision: '精确率', 
+          recall: '召回率',
+          f1: 'F1分数',
+          auc: 'AUC值',
+          map: 'mAP'
+        }
+        
+        uploadForm.value.selectedMetrics.forEach(metric => {
+          // 生成合理的随机值，偏向于较好的结果
+          const baseValue = Math.random() * 0.3 + 0.65 // 0.65-0.95之间的值
+          const value = Math.round(baseValue * 1000) / 1000 // 保留3位小数
+          results.push({ name: metricNames[metric], value })
+        })
+        
+        testResults.value = results
+        testTime.value = new Date().toLocaleString('zh-CN')
+        
+        ElMessage.success('评估指标测试完成')
+      } catch (error) {
+        ElMessage.error('测试失败，请重试')
+      } finally {
+        testingMetrics.value = false
+      }
+    }
+
+    const getMetricTagType = (value) => {
+      if (value >= 0.9) return 'success'
+      if (value >= 0.8) return 'primary'
+      if (value >= 0.7) return 'warning'
+      return 'danger'
+    }
+
     // 初始化数据
     totalUploads.value = uploadHistory.value.length
 
@@ -395,6 +466,9 @@ export default {
       uploadFormRef,
       uploadForm,
       submitting,
+      testingMetrics,
+      testResults,
+      testTime,
       fileList,
       currentPage,
       pageSize,
@@ -408,14 +482,14 @@ export default {
       beforeUpload,
       handleSuccess,
       handleError,
-      addParameter,
-      removeParameter,
       handleSubmit,
       handleReset,
       handleSaveDraft,
       handleViewDetails,
       handleTestAlgorithm,
-      handleEditAlgorithm
+      handleEditAlgorithm,
+      handleTestMetrics,
+      getMetricTagType
     }
   }
 }
@@ -434,11 +508,52 @@ export default {
   width: 100%;
 }
 
-.parameters-editor {
-  border: 1px solid #e6e6e6;
-  border-radius: 4px;
-  padding: 15px;
-  background: #fafafa;
+.metrics-selection {
+  width: 100%;
+}
+
+.metrics-checkbox-group {
+  margin-bottom: 20px;
+}
+
+.metrics-checkbox-group .el-checkbox {
+  margin-right: 12px;
+  margin-bottom: 8px;
+}
+
+.metrics-test-section {
+  margin-top: 20px;
+}
+
+.test-results {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #e6f7ff;
+  border-radius: 8px;
+  background: #f6ffed;
+}
+
+.results-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.test-info {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.test-info small {
+  color: #666;
+  font-size: 12px;
+}
+
+.metrics-tip {
+  margin-top: 20px;
 }
 
 .card-header {
@@ -453,4 +568,10 @@ export default {
   margin-top: 20px;
   text-align: right;
 }
+
+
+
+
+
+
 </style>

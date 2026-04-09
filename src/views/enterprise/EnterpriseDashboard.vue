@@ -1,14 +1,6 @@
 <template>
   <div class="enterprise-dashboard">
-    <!-- 欢迎区域 -->
-    <el-card class="welcome-card">
-      <div class="welcome-content">
-        <h2>企业信用中心</h2>
-        <p>基于AI技术的企业信用评估与风险监控</p>
-      </div>
-    </el-card>
 
-    <!-- 企业基本信息 -->
     <el-card class="info-card">
       <template #header>
         <div class="card-header">
@@ -16,7 +8,7 @@
           <el-button type="primary" link @click="openEditDialog">编辑信息</el-button>
         </div>
       </template>
-      
+
       <el-row :gutter="20">
         <el-col :span="6">
           <div class="info-item">
@@ -39,83 +31,90 @@
         <el-col :span="6">
           <div class="info-item">
             <label>注册资本：</label>
-            <span>{{ enterpriseInfo.registeredCapital }}万元</span>
+            <span>{{ enterpriseInfo.registeredCapital }} 万元</span>
           </div>
         </el-col>
       </el-row>
     </el-card>
 
-    <!-- 功能卡片区域 -->
-    <div class="function-cards">
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'risk'">
-            <div class="card-content">
-              <el-icon size="48" color="#E6A23C"><Warning /></el-icon>
-              <h3>风险预测</h3>
-              <p>企业信用风险评估</p>
-            </div>
-          </el-card>
-        </el-col>
-        
-        <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'finance'">
-            <div class="card-content">
-              <el-icon size="48" color="#409EFF"><Money /></el-icon>
-              <h3>财务分析</h3>
-              <p>财务报表分析</p>
-            </div>
-          </el-card>
-        </el-col>
-        
-        <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'monitor'">
-            <div class="card-content">
-              <el-icon size="48" color="#67C23A"><Monitor /></el-icon>
-              <h3>风险监控</h3>
-              <p>实时风险监控</p>
-            </div>
-          </el-card>
-        </el-col>
-        
-        <el-col :span="6">
-          <el-card class="function-card" @click="activeTab = 'report'">
-            <div class="card-content">
-              <el-icon size="48" color="#909399"><Document /></el-icon>
-              <h3>信用报告</h3>
-              <p>生成信用报告</p>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
+    <!-- 企业文件数据上传 -->
+    <el-card class="upload-card">
+      <template #header>
+        <div class="card-header">
+          <span>企业文件数据上传</span>
+          <el-button type="primary" link @click="openUploadDialog">上传文件</el-button>
+        </div>
+      </template>
 
-    <!-- 内容区域 -->
+      <div class="upload-content">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div class="upload-section">
+              <h4>财务报表上传</h4>
+              <p class="upload-desc">支持上传资产负债表、利润表、现金流量表等财务文件</p>
+              <el-button type="primary" @click="uploadFinancialFiles">
+                <el-icon><Document /></el-icon>
+                上传财务文件
+              </el-button>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="upload-section">
+              <h4>业务数据上传</h4>
+              <p class="upload-desc">支持上传业务合同、交易记录、客户数据等业务文件</p>
+              <el-button type="success" @click="uploadBusinessFiles">
+                <el-icon><Files /></el-icon>
+                上传业务文件
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
+
+        <el-divider />
+
+        <div class="upload-history">
+          <h4>最近上传记录</h4>
+          <el-table :data="uploadHistory" style="width: 100%" size="small">
+            <el-table-column prop="fileName" label="文件名" width="200" />
+            <el-table-column prop="fileType" label="文件类型" width="120">
+              <template #default="scope">
+                <el-tag :type="getFileTypeTag(scope.row.fileType)">{{ scope.row.fileType }}</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="uploadTime" label="上传时间" width="180" />
+            <el-table-column prop="status" label="状态" width="100">
+              <template #default="scope">
+                <el-tag :type="scope.row.status === '成功' ? 'success' : 'warning'">{{ scope.row.status }}</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="120">
+              <template #default="scope">
+                <el-button size="small" @click="downloadFile(scope.row)">下载</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+    </el-card>
+
     <div class="content-area">
-      <el-tabs v-model="activeTab" type="card">
-        <!-- 风险预测标签页 -->
-        <el-tab-pane label="风险预测" name="risk">
-          <EnterpriseRiskPrediction />
-        </el-tab-pane>
-        
-        <!-- 财务分析标签页 -->
-        <el-tab-pane label="财务分析" name="finance">
-          <EnterpriseFinancialAnalysis />
-        </el-tab-pane>
-        
-        <!-- 风险监控标签页 -->
-        <el-tab-pane label="风险监控" name="monitor">
-          <EnterpriseRiskMonitoring />
-        </el-tab-pane>
-        
-        <!-- 信用报告标签页 -->
-        <el-tab-pane label="信用报告" name="report">
-          <EnterpriseCreditReport />
-        </el-tab-pane>
-      </el-tabs>
+      <div v-show="activeTab === 'risk'">
+        <EnterpriseRiskPrediction />
+      </div>
+
+      <div v-show="activeTab === 'finance'">
+        <EnterpriseFinancialAnalysis />
+      </div>
+
+      <div v-show="activeTab === 'monitor'">
+        <EnterpriseRiskMonitoring />
+      </div>
+
+      <div v-show="activeTab === 'report'">
+        <EnterpriseCreditReport />
+      </div>
     </div>
 
-    <!-- 编辑企业信息对话框 -->
     <el-dialog
       v-model="editDialogVisible"
       title="编辑企业信息"
@@ -150,7 +149,7 @@
           <el-input v-model="editForm.address" type="textarea" :rows="2" />
         </el-form-item>
       </el-form>
-      
+
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="editDialogVisible = false">取消</el-button>
@@ -164,27 +163,38 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import { Document, Files } from '@element-plus/icons-vue'
 import EnterpriseRiskPrediction from './components/EnterpriseRiskPrediction.vue'
 import EnterpriseFinancialAnalysis from './components/EnterpriseFinancialAnalysis.vue'
 import EnterpriseRiskMonitoring from './components/EnterpriseRiskMonitoring.vue'
 import EnterpriseCreditReport from './components/EnterpriseCreditReport.vue'
+import { useFeatureAccess } from '@/composables/useFeatureAccess'
+import { getFeatureItems } from '@/config/userAccess'
+import { getCurrentUserProfile } from '@/utils/auth'
+
+const ENTERPRISE_FEATURES = getFeatureItems('enterprise')
 
 export default {
   name: 'EnterpriseDashboard',
   components: {
-    ...ElementPlusIconsVue,
-    EnterpriseRiskPrediction,
+    EnterpriseCreditReport,
     EnterpriseFinancialAnalysis,
     EnterpriseRiskMonitoring,
-    EnterpriseCreditReport
+    EnterpriseRiskPrediction,
+    Document,
+    Files
   },
   setup() {
-    const activeTab = ref('risk')
+    const { activeTab } = useFeatureAccess(
+      'enterprise',
+      ENTERPRISE_FEATURES,
+      'risk'
+    )
+
     const editDialogVisible = ref(false)
-    
+
     const enterpriseInfo = ref({
       name: '海南科技有限公司',
       creditCode: '91460000MA5TXXXXXX',
@@ -194,7 +204,7 @@ export default {
       legalPerson: '李四',
       address: '海南省海口市美兰区'
     })
-    
+
     const editForm = reactive({
       name: '',
       creditCode: '',
@@ -204,14 +214,13 @@ export default {
       legalPerson: '',
       address: ''
     })
-    
+
     const openEditDialog = () => {
-      // 将当前信息复制到编辑表单
       Object.assign(editForm, enterpriseInfo.value)
       editDialogVisible.value = true
     }
-    
-    const handleCloseEditDialog = (done) => {
+
+    const handleCloseEditDialog = done => {
       ElMessageBox.confirm('确定要取消编辑吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -222,172 +231,86 @@ export default {
         // 用户取消关闭
       })
     }
-    
+
     const saveEnterpriseInfo = () => {
-      // 保存编辑的信息
       Object.assign(enterpriseInfo.value, editForm)
       editDialogVisible.value = false
       ElMessage.success('企业信息更新成功')
     }
-    
-    // 风险监控相关逻辑
-    const monitorFilters = reactive({
-      industry: '',
-      riskLevel: '',
-      region: ''
-    })
-    
-    const monitorData = ref([])
-    const loading = ref(false)
-    const currentPage = ref(1)
-    const pageSize = ref(10)
-    const total = ref(0)
-    
-    // 模拟监控数据
-    const mockMonitorData = [
+
+    // 文件上传相关逻辑
+    const uploadDialogVisible = ref(false)
+    const uploadHistory = ref([
       {
-        id: 1,
-        companyName: '海南科技有限公司',
-        industry: '信息技术',
-        region: '海口市',
-        riskLevel: 'low',
-        riskScore: 85,
-        lastUpdate: '2024-01-15 10:30',
-        status: '正常'
+        fileName: '2023年度财务报表.xlsx',
+        fileType: '财务文件',
+        uploadTime: '2024-01-15 14:30:25',
+        status: '成功'
       },
       {
-        id: 2,
-        companyName: '三亚旅游发展有限公司',
-        industry: '旅游服务',
-        region: '三亚市',
-        riskLevel: 'medium',
-        riskScore: 65,
-        lastUpdate: '2024-01-15 09:45',
-        status: '关注'
+        fileName: '业务合同汇总.pdf',
+        fileType: '业务文件',
+        uploadTime: '2024-01-14 10:15:42',
+        status: '成功'
       },
       {
-        id: 3,
-        companyName: '儋州制造企业',
-        industry: '制造业',
-        region: '儋州市',
-        riskLevel: 'high',
-        riskScore: 45,
-        lastUpdate: '2024-01-15 08:20',
-        status: '预警'
-      },
-      {
-        id: 4,
-        companyName: '琼海金融服务公司',
-        industry: '金融服务',
-        region: '琼海市',
-        riskLevel: 'low',
-        riskScore: 90,
-        lastUpdate: '2024-01-15 11:15',
-        status: '正常'
-      },
-      {
-        id: 5,
-        companyName: '文昌房地产集团',
-        industry: '房地产',
-        region: '文昌市',
-        riskLevel: 'critical',
-        riskScore: 30,
-        lastUpdate: '2024-01-15 14:00',
-        status: '高风险'
+        fileName: '客户数据.csv',
+        fileType: '业务文件',
+        uploadTime: '2024-01-13 16:20:18',
+        status: '处理中'
       }
-    ]
-    
-    const searchMonitorData = () => {
-      loading.value = true
-      // 模拟API调用延迟
-      setTimeout(() => {
-        // 模拟筛选逻辑
-        let filteredData = [...mockMonitorData]
-        
-        if (monitorFilters.industry) {
-          filteredData = filteredData.filter(item => item.industry.includes(monitorFilters.industry))
-        }
-        
-        if (monitorFilters.riskLevel) {
-          filteredData = filteredData.filter(item => item.riskLevel === monitorFilters.riskLevel)
-        }
-        
-        if (monitorFilters.region) {
-          filteredData = filteredData.filter(item => item.region.includes(monitorFilters.region))
-        }
-        
-        monitorData.value = filteredData
-        total.value = filteredData.length
-        loading.value = false
-        
-        ElMessage.success(`查询到 ${filteredData.length} 条记录`)
-      }, 500)
+    ])
+
+    const openUploadDialog = () => {
+      uploadDialogVisible.value = true
     }
-    
-    const exportMonitorData = () => {
-      ElMessage.success('数据导出功能正在开发中...')
+
+    const uploadFinancialFiles = () => {
+      ElMessage.info('财务文件上传功能开发中...')
     }
-    
-    const viewDetail = (row) => {
-      ElMessage.info(`查看企业详情：${row.companyName}`)
+
+    const uploadBusinessFiles = () => {
+      ElMessage.info('业务文件上传功能开发中...')
     }
-    
-    const getRiskTagType = (level) => {
-      const types = {
-        low: 'success',
-        medium: 'warning',
-        high: 'danger',
-        critical: 'danger'
+
+    const getFileTypeTag = (fileType) => {
+      const typeMap = {
+        '财务文件': 'primary',
+        '业务文件': 'success',
+        '其他文件': 'info'
       }
-      return types[level] || 'info'
+      return typeMap[fileType] || 'info'
     }
-    
-    const getRiskLevelText = (level) => {
-      const texts = {
-        low: '低风险',
-        medium: '中风险',
-        high: '高风险',
-        critical: '极高风险'
-      }
-      return texts[level] || '未知'
+
+    const downloadFile = (file) => {
+      ElMessage.info(`下载文件: ${file.fileName}`)
     }
-    
-    const handleSizeChange = (size) => {
-      pageSize.value = size
-      searchMonitorData()
-    }
-    
-    const handleCurrentChange = (page) => {
-      currentPage.value = page
-      searchMonitorData()
-    }
-    
-    // 初始化时加载数据
+
     onMounted(() => {
-      searchMonitorData()
+      const profile = getCurrentUserProfile()
+      if (profile?.userType === 'enterprise') {
+        enterpriseInfo.value = {
+          ...enterpriseInfo.value,
+          name: profile.organization || enterpriseInfo.value.name,
+          industry: profile.industry || enterpriseInfo.value.industry
+        }
+      }
     })
-    
+
     return {
       activeTab,
       editDialogVisible,
-      enterpriseInfo,
       editForm,
-      monitorFilters,
-      monitorData,
-      loading,
-      currentPage,
-      pageSize,
-      total,
-      openEditDialog,
+      enterpriseInfo,
+      uploadHistory,
       handleCloseEditDialog,
+      openEditDialog,
       saveEnterpriseInfo,
-      searchMonitorData,
-      exportMonitorData,
-      viewDetail,
-      getRiskTagType,
-      getRiskLevelText,
-      handleSizeChange,
-      handleCurrentChange
+      openUploadDialog,
+      uploadFinancialFiles,
+      uploadBusinessFiles,
+      getFileTypeTag,
+      downloadFile
     }
   }
 }
@@ -437,219 +360,54 @@ export default {
   color: #303133;
 }
 
-.function-cards {
-  margin-bottom: 20px;
-}
-
-.function-card {
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-  height: 165px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.function-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.card-content {
-  text-align: center;
-}
-
-.card-content h3 {
-  margin: 15px 0 10px;
-  color: #303133;
-}
-
-.card-content p {
-  color: #909399;
-  font-size: 14px;
-}
-
 .content-area {
   background: white;
   border-radius: 4px;
   padding: 20px;
 }
 
-.tab-content {
-  padding: 20px;
-  min-height: 300px;
-}
-
-.tab-content h3 {
-  color: #303133;
-  margin-bottom: 15px;
-}
-
-.tab-content p {
-  color: #606266;
+.upload-card {
   margin-bottom: 20px;
 }
 
-.tab-content .el-progress {
-  width: 200px;
+.upload-content {
+  padding: 10px 0;
 }
 
-/* 风险监控样式 */
-.monitor-content {
-  padding: 0;
-}
-
-.filter-section {
+.upload-section {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #e4e7ed;
+  border-radius: 8px;
   background: #f8f9fa;
-  padding: 20px;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  transition: all 0.3s ease;
 }
 
-.filter-item {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.upload-section:hover {
+  border-color: #409eff;
+  box-shadow: 0 2px 8px rgba(64, 158, 255, 0.1);
 }
 
-.filter-item label {
-  font-weight: 600;
-  color: #606266;
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.filter-item .el-select {
-  width: 100%;
-}
-
-/* 修复下拉框显示问题 */
-.filter-item .el-select .el-input {
-  width: 100% !important;
-}
-
-.filter-item .el-select .el-input__inner {
-  height: 36px;
-  line-height: 36px;
-  width: 100% !important;
-  min-width: 120px;
-}
-
-.filter-item .el-select .el-input__suffix {
-  line-height: 36px;
-}
-
-/* 确保下拉框选项显示完整 */
-.el-select-dropdown {
-  min-width: 200px !important;
-}
-
-.el-select-dropdown__item {
-  padding: 0 20px;
-  height: 34px;
-  line-height: 34px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.el-select-dropdown__item span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block;
-  width: 100%;
-}
-
-/* 选中项显示优化 */
-.el-select .el-input__inner {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.monitor-data {
-  margin-top: 0;
-}
-
-.data-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
+.upload-section h4 {
+  margin-bottom: 10px;
+  color: #303133;
   font-size: 16px;
 }
 
-.pagination-container {
-  margin-top: 20px;
-  text-align: right;
-}
-
-/* 确保下拉框选项显示完整 */
-.el-select-dropdown {
-  min-width: 120px;
-}
-
-.el-select-dropdown__item {
-  padding: 0 20px;
-  height: 34px;
-  line-height: 34px;
-}
-
-.el-select-dropdown__item span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* 表格样式优化 */
-.el-table {
+.upload-desc {
+  color: #606266;
   font-size: 14px;
+  margin-bottom: 15px;
+  line-height: 1.5;
 }
 
-.el-table .el-table__cell {
-  padding: 12px 0;
+.upload-history {
+  margin-top: 20px;
 }
 
-.el-table .el-table__header th {
-  background-color: #f5f7fa;
-  font-weight: 600;
+.upload-history h4 {
+  margin-bottom: 15px;
   color: #303133;
-}
-
-/* 响应式设计 */
-@media (max-width: 1200px) {
-  .filter-section .el-col {
-    margin-bottom: 15px;
-  }
-  
-  .filter-item {
-    gap: 6px;
-  }
-  
-  .filter-item label {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 768px) {
-  .filter-section {
-    padding: 15px;
-  }
-  
-  .filter-section .el-col {
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  
-  .data-header {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  
-  .pagination-container {
-    text-align: center;
-  }
+  font-size: 16px;
 }
 </style>
