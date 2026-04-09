@@ -9,7 +9,7 @@
 - 🎯 **多角色智能分析**: 支持个人、企业、政府、研究机构四种用户角色
 - 📊 **实时风险监控**: 基于ECharts的可视化风险分布地图
 - 🤖 **AI驱动预测**: 集成机器学习算法进行信用风险评估
-- 🗺️ **地理信息集成**: 结合高德地图API的地理位置风险分析
+- 📈 **数据可视化**: 丰富的图表展示和数据分析功能
 - 📱 **响应式设计**: 适配桌面端和移动端设备
 - 🔒 **权限管理**: 基于角色的功能访问控制
 
@@ -66,14 +66,16 @@
 - **Vue 3**: 现代化前端框架，使用Composition API
 - **Vue Router**: 路由管理，支持动态路由和权限控制
 - **Element Plus**: UI组件库，提供丰富的UI组件
-- **ECharts/Vue-ECharts**: 数据可视化，支持多种图表类型
-- **高德地图API**: 地理位置服务，集成地图展示功能
+- **ECharts/Vue-ECharts**: 数据可视化，支持多种图表类型和地图展示
 - **Vite**: 构建工具，提供快速的开发体验
 
 ### 后端技术栈
-- **Flask**: 轻量级Web框架，RESTful API设计
-- **PyEcharts**: Python图表库，后端数据可视化处理
-- **Flask-CORS**: 跨域支持，解决前后端分离的跨域问题
+- **SpringBoot**: 企业级Java框架，提供完整的微服务支持
+- **Spring Security**: 安全认证与权限管理框架
+- **Spring Data JPA**: 数据持久化ORM框架
+- **MySQL**: 关系型数据库，存储业务数据
+- **Redis**: 缓存数据库，提升系统性能
+- **RESTful API**: 标准的REST接口设计
 
 ### 系统架构图
 
@@ -81,10 +83,10 @@
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   前端应用层     │    │   后端服务层     │    │   数据服务层     │
 │                 │    │                 │    │                 │
-│ • Vue 3         │◄──►│ • Flask         │◄──►│ • 模拟数据       │
-│ • Element Plus  │    │ • PyEcharts     │    │ • 静态数据文件   │
-│ • ECharts       │    │ • RESTful API   │    │                 │
-│ • 高德地图API    │    │                 │    │                 │
+│ • Vue 3         │◄──►│ • SpringBoot    │◄──►│ • MySQL         │
+│ • Element Plus  │    │ • Spring Security│    │ • Redis         │
+│ • ECharts       │    │ • Spring Data JPA│    │ • 业务数据       │
+│                 │    │ • RESTful API   │    │                 │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
@@ -104,6 +106,7 @@
 
 ```bash
 # 克隆项目
+git clone https://github.com/MikuChenOwO/Hainan-Credit
 cd credit-risk-system
 
 # 安装依赖
@@ -116,14 +119,17 @@ npm run dev
 ### 后端安装
 
 ```bash
-# 进入后端目录
-cd backend
+# 进入SpringBoot项目目录
+cd credit-risk-backend
 
-# 安装Python依赖
-pip install -r requirements.txt
+# 使用Maven构建项目
+mvn clean install
 
-# 启动后端服务
-python app.py
+# 启动SpringBoot应用
+mvn spring-boot:run
+
+# 或者直接运行jar包
+java -jar target/credit-risk-backend-1.0.0.jar
 ```
 
 ## 环境配置
@@ -133,18 +139,22 @@ python app.py
 - npm 或 yarn
 
 ### 后端环境要求
-- Python >= 3.8
-- pip
+- Java >= 11
+- Maven >= 3.6
+- MySQL >= 8.0
+- Redis >= 6.0
+
+### 数据库配置
+1. 创建MySQL数据库：`credit_risk_system`
+2. 导入数据库脚本：`database/schema.sql`
+3. 配置Redis连接信息
+4. 修改`application.yml`中的数据库连接配置
 
 ## 项目结构
 
+### 前端项目结构
 ```
-credit-risk-system/
-├── backend/                 # 后端代码
-│   ├── app.py              # Flask主应用文件
-│   ├── requirements.txt    # Python依赖配置
-│   ├── start_backend.py    # 后端启动脚本
-│   └── test_app.py         # 后端测试文件
+credit-risk-system/          # 前端项目根目录
 ├── src/                    # 前端源码
 │   ├── composables/        # Vue组合式函数
 │   │   └── useFeatureAccess.js  # 功能权限控制
@@ -183,32 +193,93 @@ credit-risk-system/
 └── README.md              # 项目说明文档
 ```
 
+### 后端项目结构
+```
+credit-risk-backend/        # SpringBoot后端项目
+├── src/main/java/
+│   └── com/creditrisk/
+│       ├── controller/     # 控制器层
+│       ├── service/        # 业务逻辑层
+│       ├── repository/     # 数据访问层
+│       ├── entity/         # 实体类
+│       ├── dto/            # 数据传输对象
+│       ├── config/         # 配置类
+│       └── Application.java # 启动类
+├── src/main/resources/
+│   ├── application.yml     # 应用配置
+│   └── static/            # 静态资源
+├── src/test/java/         # 测试代码
+├── database/              # 数据库脚本
+│   ├── schema.sql         # 数据库建表脚本
+│   └── data.sql           # 初始化数据
+├── pom.xml               # Maven依赖配置
+└── README.md             # 后端项目说明
+```
+
 ## API接口
 
-### 主要API
+### 主要API接口
 
-#### 地图数据接口
-- `GET /api/map/hainan`
-  - **功能**: 获取海南省信用风险分布地图数据
-  - **参数**: 无
-  - **返回**: ECharts地图配置数据
+#### 认证相关接口
+- `POST /api/auth/login` - 用户登录
+- `POST /api/auth/register` - 用户注册
+- `GET /api/auth/profile` - 获取用户信息
+- `POST /api/auth/logout` - 用户登出
 
-#### 健康检查接口
-- `GET /api/health`
-  - **功能**: 后端服务健康状态检查
-  - **参数**: 无
-  - **返回**: 服务状态信息
+#### 企业数据接口
+- `GET /api/enterprises` - 获取企业列表
+- `GET /api/enterprises/{id}` - 获取企业详情
+- `POST /api/enterprises` - 创建企业信息
+- `PUT /api/enterprises/{id}` - 更新企业信息
+- `GET /api/enterprises/risk-analysis` - 企业风险分析
+
+#### 风险预测接口
+- `POST /api/predictions/enterprise` - 企业风险预测
+- `POST /api/predictions/personal` - 个人信用评估
+- `GET /api/predictions/history` - 预测历史记录
+
+#### 算法管理接口
+- `GET /api/algorithms` - 获取算法列表
+- `POST /api/algorithms` - 上传新算法
+- `POST /api/algorithms/{id}/test` - 测试算法
+- `PUT /api/algorithms/{id}/deploy` - 部署算法
+
+#### 数据统计接口
+- `GET /api/statistics/overview` - 系统概览统计
+- `GET /api/statistics/risk-distribution` - 风险分布统计
+- `GET /api/statistics/industry-analysis` - 行业分析数据
 
 ### API使用示例
 
 ```javascript
-// 获取地图数据
-fetch('/api/map/hainan')
-  .then(response => response.json())
-  .then(data => {
-    // 使用ECharts渲染地图
-    chart.setOption(data);
-  });
+// 用户登录
+fetch('/api/auth/login', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    username: 'user@example.com',
+    password: 'password123'
+  })
+})
+.then(response => response.json())
+.then(data => {
+  // 保存token
+  localStorage.setItem('token', data.token);
+});
+
+// 获取企业风险分析
+fetch('/api/enterprises/risk-analysis', {
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+  }
+})
+.then(response => response.json())
+.then(data => {
+  // 处理风险分析数据
+  console.log(data);
+});
 ```
 
 ## 使用说明
@@ -225,21 +296,30 @@ fetch('/api/map/hainan')
 - **状态管理**: 使用Composition API进行状态管理
 - **路由配置**: 基于角色的动态路由权限控制
 - **UI组件**: 使用Element Plus组件库，保持界面一致性
-- **数据可视化**: 集成ECharts进行图表展示
-- **地图集成**: 使用高德地图API进行地理位置展示
+- **数据可视化**: 集成ECharts进行图表展示和地图可视化
+- **API调用**: 使用axios进行HTTP请求，统一错误处理
 
 ### 后端开发
-- **API设计**: RESTful API规范，支持跨域请求
-- **框架选择**: Flask轻量级框架，易于扩展
-- **数据可视化**: 使用PyEcharts生成图表配置
-- **错误处理**: 统一的错误响应格式
-- **测试**: 使用Flask测试客户端进行接口测试
+- **框架选择**: SpringBoot 2.7+，提供完整的微服务支持
+- **安全认证**: 集成Spring Security进行权限控制
+- **数据持久化**: 使用Spring Data JPA进行数据库操作
+- **API设计**: RESTful API规范，统一响应格式
+- **缓存策略**: Redis缓存提升系统性能
+- **事务管理**: Spring声明式事务管理
+- **单元测试**: 使用JUnit和Mockito进行测试
+
+### 数据库设计
+- **关系型数据库**: MySQL 8.0+，支持事务和复杂查询
+- **表结构设计**: 遵循数据库设计范式
+- **索引优化**: 合理设计索引提升查询性能
+- **数据备份**: 定期备份重要业务数据
 
 ### 代码规范
 - **前端**: 遵循Vue 3官方代码风格指南
-- **后端**: 遵循PEP 8 Python代码规范
+- **后端**: 遵循阿里巴巴Java开发手册
+- **数据库**: 使用统一的命名规范和注释
 - **提交信息**: 使用约定式提交(Conventional Commits)
-- **文档**: 代码注释和README文档保持同步更新
+- **文档**: 代码注释和API文档保持同步更新
 
 ## 项目特点
 

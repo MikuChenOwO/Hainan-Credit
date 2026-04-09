@@ -1,0 +1,297 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="2cc2d294-239e-d60f-13bb-73c91c174d77">
+    <mxGraphModel dx="1426" dy="793" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- 项目标题 -->
+        <mxCell id="title" value="海南省信用风险预测系统 - 完整技术路线图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;fontStyle=1;fontColor=#2c3e50" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="469" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- 整体架构图 -->
+        <mxCell id="architecture" value="整体系统架构" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#34495e" vertex="1" parent="1">
+          <mxGeometry x="50" y="80" width="120" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- 前端层 -->
+        <mxCell id="frontend-layer" value="前端展示层" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#d6eaf8;strokeColor=#3498db;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#d6eaf8;fontSize=16;fontColor=#2c3e50" vertex="1" parent="1">
+          <mxGeometry x="50" y="120" width="250" height="200" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="vue3-tech" value="Vue 3 + Vite" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f6f3;strokeColor=#1abc9c;fontSize=14;fontColor=#16a085;" vertex="1" parent="frontend-layer">
+          <mxGeometry x="10" y="30" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="element-plus" value="Element Plus UI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f6f3;strokeColor=#1abc9c;fontSize=14;fontColor=#16a085;" vertex="1" parent="frontend-layer">
+          <mxGeometry x="10" y="70" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="echarts" value="ECharts 可视化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f6f3;strokeColor=#1abc9c;fontSize=14;fontColor=#16a085;" vertex="1" parent="frontend-layer">
+          <mxGeometry x="10" y="110" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="amap-api" value="高德地图 API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f6f3;strokeColor=#1abc9c;fontSize=14;fontColor=#16a085;" vertex="1" parent="frontend-layer">
+          <mxGeometry x="10" y="150" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- SpringBoot后端层 -->
+        <mxCell id="springboot-layer" value="SpringBoot 应用层" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fadbd8;strokeColor=#e74c3c;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#fadbd8;fontSize=16;fontColor=#2c3e50" vertex="1" parent="1">
+          <mxGeometry x="320" y="120" width="250" height="200" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="springboot-core" value="SpringBoot 框架" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdedec;strokeColor=#e74c3c;fontSize=14;fontColor=#c0392b;" vertex="1" parent="springboot-layer">
+          <mxGeometry x="10" y="30" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="spring-security" value="Spring Security" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdedec;strokeColor=#e74c3c;fontSize=14;fontColor=#c0392b;" vertex="1" parent="springboot-layer">
+          <mxGeometry x="10" y="70" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="spring-data-jpa" value="Spring Data JPA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdedec;strokeColor=#e74c3c;fontSize=14;fontColor=#c0392b;" vertex="1" parent="springboot-layer">
+          <mxGeometry x="10" y="110" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="rest-api" value="RESTful API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdedec;strokeColor=#e74c3c;fontSize=14;fontColor=#c0392b;" vertex="1" parent="springboot-layer">
+          <mxGeometry x="10" y="150" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- 数据持久层 -->
+        <mxCell id="data-layer" value="数据持久层" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#d5f5e3;strokeColor=#27ae60;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#d5f5e3;fontSize=16;fontColor=#2c3e50" vertex="1" parent="1">
+          <mxGeometry x="590" y="120" width="250" height="200" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="mysql-db" value="MySQL 数据库" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eafaf1;strokeColor=#27ae60;fontSize=14;fontColor=#229954;" vertex="1" parent="data-layer">
+          <mxGeometry x="10" y="30" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="redis-cache" value="Redis 缓存" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eafaf1;strokeColor=#27ae60;fontSize=14;fontColor=#229954;" vertex="1" parent="data-layer">
+          <mxGeometry x="10" y="70" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="data-migration" value="数据迁移工具" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eafaf1;strokeColor=#27ae60;fontSize=14;fontColor=#229954;" vertex="1" parent="data-layer">
+          <mxGeometry x="10" y="110" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="backup-recovery" value="备份恢复机制" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eafaf1;strokeColor=#27ae60;fontSize=14;fontColor=#229954;" vertex="1" parent="data-layer">
+          <mxGeometry x="10" y="150" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- 部署运维层 -->
+        <mxCell id="deploy-layer" value="部署运维层" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fcf3cf;strokeColor=#f39c12;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#fcf3cf;fontSize=16;fontColor=#2c3e50" vertex="1" parent="1">
+          <mxGeometry x="860" y="120" width="250" height="200" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="docker" value="Docker 容器化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9e7;strokeColor=#f39c12;fontSize=14;fontColor=#d68910;" vertex="1" parent="deploy-layer">
+          <mxGeometry x="10" y="30" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="nginx" value="Nginx 负载均衡" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9e7;strokeColor=#f39c12;fontSize=14;fontColor=#d68910;" vertex="1" parent="deploy-layer">
+          <mxGeometry x="10" y="70" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ci-cd" value="CI/CD 流水线" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9e7;strokeColor=#f39c12;fontSize=14;fontColor=#d68910;" vertex="1" parent="deploy-layer">
+          <mxGeometry x="10" y="110" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="monitoring" value="监控告警系统" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9e7;strokeColor=#f39c12;fontSize=14;fontColor=#d68910;" vertex="1" parent="deploy-layer">
+          <mxGeometry x="10" y="150" width="230" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- 连接线 -->
+        <mxCell id="conn1" value="HTTP/HTTPS" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="-0.1667" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="conn1-edge" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#3498db;" edge="1" parent="1" source="frontend-layer" target="springboot-layer">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="220" as="sourcePoint" />
+            <mxPoint x="350" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="conn2" value="JDBC/ORM" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="-0.1667" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="conn2-edge" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#e74c3c;" edge="1" parent="1" source="springboot-layer" target="data-layer">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="220" as="sourcePoint" />
+            <mxPoint x="620" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="conn3" value="部署管理" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="-0.1667" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="conn3-edge" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#27ae60;" edge="1" parent="1" source="deploy-layer" target="springboot-layer">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1110" y="220" as="sourcePoint" />
+            <mxPoint x="1060" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 开发路线图 -->
+        <mxCell id="roadmap-title" value="开发路线图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#34495e" vertex="1" parent="1">
+          <mxGeometry x="50" y="350" width="120" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- 阶段1 -->
+        <mxCell id="phase1" value="阶段1: 基础架构搭建" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3498db;strokeColor=#2980b9;fontSize=16;fontColor=#ffffff;gradientColor=#2980b9;gradientDirection=north;" vertex="1" parent="1">
+          <mxGeometry x="50" y="400" width="200" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase1-content" value="基础架构" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#e8f6f3;strokeColor=#1abc9c;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#e8f6f3;fontSize=14;fontColor=#16a085" vertex="1" parent="1">
+          <mxGeometry x="50" y="460" width="200" height="180" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase1-item1" value="SpringBoot 项目初始化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d6eaf8;strokeColor=#3498db;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase1-content">
+          <mxGeometry x="10" y="30" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase1-item2" value="MySQL 数据库设计" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d6eaf8;strokeColor=#3498db;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase1-content">
+          <mxGeometry x="10" y="65" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase1-item3" value="Vue 3 前端框架搭建" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d6eaf8;strokeColor=#3498db;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase1-content">
+          <mxGeometry x="10" y="100" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase1-item4" value="前后端接口定义" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d6eaf8;strokeColor=#3498db;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase1-content">
+          <mxGeometry x="10" y="135" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <!-- 阶段2 -->
+        <mxCell id="phase2" value="阶段2: 核心功能开发" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e74c3c;strokeColor=#c0392b;fontSize=16;fontColor=#ffffff;gradientColor=#c0392b;gradientDirection=north;" vertex="1" parent="1">
+          <mxGeometry x="270" y="400" width="200" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase2-content" value="核心功能" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fdedec;strokeColor=#e74c3c;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#fdedec;fontSize=14;fontColor=#c0392b" vertex="1" parent="1">
+          <mxGeometry x="270" y="460" width="200" height="180" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase2-item1" value="用户认证与权限管理" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fadbd8;strokeColor=#e74c3c;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase2-content">
+          <mxGeometry x="10" y="30" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase2-item2" value="企业数据管理模块" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fadbd8;strokeColor=#e74c3c;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase2-content">
+          <mxGeometry x="10" y="65" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase2-item3" value="风险预测算法集成" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fadbd8;strokeColor=#e74c3c;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase2-content">
+          <mxGeometry x="10" y="100" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase2-item4" value="可视化图表展示" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fadbd8;strokeColor=#e74c3c;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase2-content">
+          <mxGeometry x="10" y="135" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <!-- 阶段3 -->
+        <mxCell id="phase3" value="阶段3: 系统优化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#27ae60;strokeColor=#229954;fontSize=16;fontColor=#ffffff;gradientColor=#229954;gradientDirection=north;" vertex="1" parent="1">
+          <mxGeometry x="490" y="400" width="200" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase3-content" value="系统优化" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#eafaf1;strokeColor=#27ae60;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#eafaf1;fontSize=14;fontColor=#229954" vertex="1" parent="1">
+          <mxGeometry x="490" y="460" width="200" height="180" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase3-item1" value="性能优化与缓存" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#27ae60;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase3-content">
+          <mxGeometry x="10" y="30" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase3-item2" value="安全加固" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#27ae60;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase3-content">
+          <mxGeometry x="10" y="65" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase3-item3" value="API 文档生成" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#27ae60;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase3-content">
+          <mxGeometry x="10" y="100" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase3-item4" value="单元测试覆盖" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#27ae60;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase3-content">
+          <mxGeometry x="10" y="135" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <!-- 阶段4 -->
+        <mxCell id="phase4" value="阶段4: 部署运维" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f39c12;strokeColor=#d68910;fontSize=16;fontColor=#ffffff;gradientColor=#d68910;gradientDirection=north;" vertex="1" parent="1">
+          <mxGeometry x="710" y="400" width="200" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase4-content" value="部署运维" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fef9e7;strokeColor=#f39c12;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#fef9e7;fontSize=14;fontColor=#d68910" vertex="1" parent="1">
+          <mxGeometry x="710" y="460" width="200" height="180" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase4-item1" value="Docker 容器化部署" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fcf3cf;strokeColor=#f39c12;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase4-content">
+          <mxGeometry x="10" y="30" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase4-item2" value="CI/CD 自动化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fcf3cf;strokeColor=#f39c12;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase4-content">
+          <mxGeometry x="10" y="65" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase4-item3" value="监控告警配置" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fcf3cf;strokeColor=#f39c12;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase4-content">
+          <mxGeometry x="10" y="100" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="phase4-item4" value="备份恢复策略" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fcf3cf;strokeColor=#f39c12;fontSize=12;fontColor=#2c3e50" vertex="1" parent="phase4-content">
+          <mxGeometry x="10" y="135" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <!-- 连接线 -->
+        <mxCell id="phase-conn1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#3498db;" edge="1" parent="1" source="phase1" target="phase2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="250" y="420" as="sourcePoint" />
+            <mxPoint x="300" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="phase-conn2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#e74c3c;" edge="1" parent="1" source="phase2" target="phase3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="420" as="sourcePoint" />
+            <mxPoint x="520" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="phase-conn3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#27ae60;" edge="1" parent="1" source="phase3" target="phase4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="690" y="420" as="sourcePoint" />
+            <mxPoint x="740" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 技术栈总结 -->
+        <mxCell id="tech-summary" value="技术栈总结" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#34495e" vertex="1" parent="1">
+          <mxGeometry x="50" y="670" width="120" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="summary-card" value="完整技术栈" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fa;strokeColor=#bdc3c7;fontSize=14;fontColor=#2c3e50;" vertex="1" parent="1">
+          <mxGeometry x="50" y="710" width="860" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="frontend-summary" value="前端: Vue 3 + Element Plus + ECharts + 高德地图" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#3498db;" vertex="1" parent="1">
+          <mxGeometry x="70" y="730" width="300" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="backend-summary" value="后端: SpringBoot + Spring Security + Spring Data JPA" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#e74c3c;" vertex="1" parent="1">
+          <mxGeometry x="70" y="755" width="300" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="database-summary" value="数据库: MySQL + Redis 缓存" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#27ae60;" vertex="1" parent="1">
+          <mxGeometry x="400" y="730" width="200" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="deploy-summary" value="部署: Docker + Nginx + CI/CD + 监控告警" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#f39c12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="755" width="250" height="20" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

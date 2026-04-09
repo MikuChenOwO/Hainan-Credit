@@ -1,12 +1,5 @@
 <template>
   <div class="personal-dashboard">
-    <el-card class="welcome-card">
-      <div class="welcome-content">
-        <h2>个人信用中心</h2>
-        <p>基于 AI 技术的个人信用评估与风险预测</p>
-      </div>
-    </el-card>
-
     <div class="content-area">
       <div v-show="activeTab === 'profile'">
         <UserProfile />

@@ -4,7 +4,7 @@
       <div>
         <p class="eyebrow">Research Data Hub</p>
         <h3>科研数据管理工作台</h3>
-        <p>申请记录和上传历史现在都是前端 mock，并且按当前账号隔离，不再写入浏览器本地存储。</p>
+        <p>在此模块进行科研数据的管理，包括官方目录、申请中心和自主上传。</p>
       </div>
       <div class="actions">
         <el-button plain type="primary" @click="scrollTo('catalog')">官方目录</el-button>

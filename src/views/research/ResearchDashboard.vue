@@ -61,17 +61,11 @@
       </div>
 
       <div v-show="activeTab === 'manage'">
-        <div class="placeholder-content">
-          <h3>算法管理</h3>
-          <p>算法管理功能开发中...</p>
-        </div>
+        <AlgorithmManagement />
       </div>
 
       <div v-show="activeTab === 'test'">
-        <div class="placeholder-content">
-          <h3>算法测试</h3>
-          <p>算法测试功能开发中...</p>
-        </div>
+        <AlgorithmTesting />
       </div>
 
       <div v-show="activeTab === 'data'">
@@ -85,6 +79,8 @@
 import { Check, Clock, Cpu, DataLine } from '@element-plus/icons-vue'
 import AlgorithmUpload from './components/AlgorithmUpload.vue'
 import AlgorithmComposer from './components/AlgorithmComposer.vue'
+import AlgorithmManagement from './components/AlgorithmManagement.vue'
+import AlgorithmTesting from './components/AlgorithmTesting.vue'
 import ResearchDataWorkbench from './components/ResearchDataWorkbench.vue'
 import { useFeatureAccess } from '@/composables/useFeatureAccess'
 import { getFeatureItems } from '@/config/userAccess'
@@ -96,6 +92,8 @@ export default {
   components: {
     AlgorithmComposer,
     AlgorithmUpload,
+    AlgorithmManagement,
+    AlgorithmTesting,
     Check,
     Clock,
     Cpu,
