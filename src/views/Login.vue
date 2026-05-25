@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="login-container">
     <div class="login-box">
       <div class="login-header">
@@ -171,6 +171,25 @@
           </el-col>
         </el-row>
 
+        <el-row v-if="showCreditCodeField" :gutter="16">
+          <el-col :span="24">
+            <el-form-item label="信用代码" prop="creditCode">
+              <el-input
+                v-model="registerForm.creditCode"
+                :placeholder="creditCodePlaceholder"
+                @blur="handleCreditCodeLookup"
+              >
+                <template #append>
+                  <el-button @click="handleCreditCodeLookup">查询并填充</el-button>
+                </template>
+              </el-input>
+              <div v-if="creditCodeLookupMessage" class="field-helper">
+                {{ creditCodeLookupMessage }}
+              </div>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
         <el-row :gutter="16">
           <el-col :span="12">
             <el-form-item label="所属单位" prop="organization">
@@ -213,6 +232,17 @@
           <el-col :span="12">
             <el-form-item label="邮箱" prop="email">
               <el-input v-model="registerForm.email" placeholder="请输入联系邮箱" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row v-if="showCreditCodeField" :gutter="16">
+          <el-col :span="24">
+            <el-form-item label="联系地址" prop="address">
+              <el-input
+                v-model="registerForm.address"
+                placeholder="信用代码查询后会自动填充，也可手动修改"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -352,8 +382,10 @@ import {
 } from '@/config/userAccess'
 import {
   createDefaultProfile,
+  findCreditCodeProfile,
   findRegisteredUser,
   normalizeUserProfile,
+  normalizeCreditCode,
   registerUser,
   setCurrentUserProfile,
   updateUserPassword
@@ -373,6 +405,7 @@ export default {
     const forgotPasswordDialogVisible = ref(false)
     const sentVerificationCode = ref('')
     const verificationCountdown = ref(0)
+    const creditCodeLookupMessage = ref('')
     let countdownTimer = null
 
     const loginForm = reactive({
@@ -384,6 +417,7 @@ export default {
     const registerForm = reactive({
       userType: '',
       businessType: '',
+      creditCode: '',
       username: '',
       realName: '',
       password: '',
@@ -391,7 +425,8 @@ export default {
       organization: '',
       industry: '',
       phone: '',
-      email: ''
+      email: '',
+      address: ''
     })
 
     const forgotPasswordForm = reactive({
@@ -407,6 +442,7 @@ export default {
     const selectedBusinessPreset = computed(() =>
       getBusinessPreset(registerForm.userType, registerForm.businessType)
     )
+    const showCreditCodeField = computed(() => registerForm.userType !== 'personal')
     const selectedFeatureItems = computed(() => {
       if (!registerForm.userType || !selectedBusinessPreset.value) {
         return []
@@ -426,6 +462,15 @@ export default {
         admin: '例如：系统运维中心'
       }
       return placeholders[registerForm.userType] || '请输入所属单位'
+    })
+
+    const creditCodePlaceholder = computed(() => {
+      const placeholders = {
+        enterprise: '请输入统一社会信用代码',
+        government: '请输入机构统一信用代码',
+        research: '请输入科研机构信用代码'
+      }
+      return placeholders[registerForm.userType] || '请输入信用代码'
     })
 
     const validatePassword = (_, value, callback) => {
@@ -476,6 +521,26 @@ export default {
       callback()
     }
 
+    const validateCreditCode = (_, value, callback) => {
+      if (registerForm.userType === 'personal') {
+        callback()
+        return
+      }
+
+      const normalizedValue = normalizeCreditCode(value)
+      if (!normalizedValue) {
+        callback(new Error('请输入信用代码'))
+        return
+      }
+
+      if (!/^[0-9A-Z]{18}$/.test(normalizedValue)) {
+        callback(new Error('信用代码格式不正确'))
+        return
+      }
+
+      callback()
+    }
+
     const validateForgotConfirmPassword = (_, value, callback) => {
       if (!value) {
         callback(new Error('请再次输入新密码'))
@@ -516,6 +581,7 @@ export default {
     const registerRules = {
       userType: [{ required: true, message: '请选择用户类型', trigger: 'change' }],
       businessType: [{ required: true, message: '请选择业务方案', trigger: 'change' }],
+      creditCode: [{ validator: validateCreditCode, trigger: ['blur', 'change'] }],
       username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
       realName: [{ required: true, message: '请输入真实姓名', trigger: 'blur' }],
       password: [{ validator: validatePassword, trigger: 'blur' }],
@@ -548,6 +614,7 @@ export default {
       Object.assign(registerForm, {
         userType: targetUserType.value || 'personal',
         businessType: '',
+        creditCode: '',
         username: '',
         realName: '',
         password: '',
@@ -555,8 +622,10 @@ export default {
         organization: '',
         industry: '',
         phone: '',
-        email: ''
+        email: '',
+        address: ''
       })
+      creditCodeLookupMessage.value = ''
 
       const defaultPreset = getBusinessPreset(registerForm.userType, '')
       registerForm.businessType = defaultPreset?.value || ''
@@ -577,6 +646,45 @@ export default {
         clearInterval(countdownTimer)
         countdownTimer = null
       }
+    }
+
+    const handleCreditCodeLookup = () => {
+      const normalizedCode = normalizeCreditCode(registerForm.creditCode)
+      registerForm.creditCode = normalizedCode
+      creditCodeLookupMessage.value = ''
+
+      if (!showCreditCodeField.value) {
+        return
+      }
+
+      if (!normalizedCode) {
+        return
+      }
+
+      if (!/^[0-9A-Z]{18}$/.test(normalizedCode)) {
+        creditCodeLookupMessage.value = '信用代码格式不正确，请先检查后再查询。'
+        return
+      }
+
+      const matchedProfile = findCreditCodeProfile(registerForm.userType, normalizedCode)
+      if (!matchedProfile) {
+        creditCodeLookupMessage.value = '未找到匹配的信用代码，请手动补全注册信息。'
+        return
+      }
+
+      registerForm.organization = matchedProfile.organization || registerForm.organization
+      registerForm.realName = matchedProfile.realName || registerForm.realName
+      registerForm.industry = matchedProfile.industry || registerForm.industry
+      registerForm.phone = matchedProfile.phone || registerForm.phone
+      registerForm.email = matchedProfile.email || registerForm.email
+      registerForm.address = matchedProfile.address || registerForm.address
+
+      if (matchedProfile.businessType) {
+        registerForm.businessType = matchedProfile.businessType
+      }
+
+      creditCodeLookupMessage.value = `已匹配到 ${matchedProfile.organization}，相关信息已自动填充。`
+      ElMessage.success('信用代码匹配成功，已自动填充信息')
     }
 
     const sendVerificationCode = async () => {
@@ -611,7 +719,14 @@ export default {
     }
 
     const handleRegisterUserTypeChange = (userType) => {
+      registerForm.creditCode = ''
+      registerForm.realName = ''
+      registerForm.organization = ''
       registerForm.industry = ''
+      registerForm.phone = ''
+      registerForm.email = ''
+      registerForm.address = ''
+      creditCodeLookupMessage.value = ''
       const defaultPreset = getBusinessPreset(userType, '')
       registerForm.businessType = defaultPreset?.value || ''
     }
@@ -761,12 +876,15 @@ export default {
       handleForgotPassword,
       handleLogin,
       handleRegister,
+      handleCreditCodeLookup,
       handleRegisterUserTypeChange,
       loginForm,
       loginFormRef,
       loginRules,
       openForgotPasswordDialog,
       openRegisterDialog,
+      creditCodeLookupMessage,
+      creditCodePlaceholder,
       organizationPlaceholder,
       sendVerificationCode,
       registerDialogVisible,
@@ -775,6 +893,7 @@ export default {
       registerRules,
       selectedBusinessPreset,
       selectedFeatureItems,
+      showCreditCodeField,
       targetUserType,
       verificationCountdown
     }

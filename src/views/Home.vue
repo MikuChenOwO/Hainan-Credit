@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="home-container">
     <!-- 头部导航 -->
     <header class="home-header">
@@ -141,7 +141,7 @@
           <div class="card-icon">
             <el-icon size="48"><School /></el-icon>
           </div>
-          <h4>政府用户</h4>
+          <h4>政府用户（内测）</h4>
           <p>风险监控、定向推送、监管报告</p>
           <div class="card-stats">
             <span>监管机构：50+</span>
@@ -153,7 +153,7 @@
           <div class="card-icon">
             <el-icon size="48"><Reading /></el-icon>
           </div>
-          <h4>科研用户</h4>
+          <h4>科研用户（内测）</h4>
           <p>数据研究、模型分析、学术支持</p>
           <div class="card-stats">
             <span>合作机构：20+</span>

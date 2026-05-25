@@ -11,6 +11,79 @@ const STORAGE_KEYS = {
   activeFeatureKey: 'credit-risk-active-feature-key'
 }
 
+const DEFAULT_PERSONAL_INFO = {
+  name: '张三',
+  gender: '未填写',
+  age: 35,
+  maritalStatus: '未填写',
+  education: '本科',
+  idNumber: '',
+  phone: '',
+  email: '',
+  city: '',
+  address: '',
+  residenceStatus: '自有住房',
+  occupation: '工程师',
+  employer: '',
+  jobTitle: '',
+  workYears: 5,
+  socialInsuranceYears: 5,
+  providentFundStatus: '正常缴存',
+  incomeType: '工资收入',
+  income: 15000,
+  otherIncome: 0,
+  monthlyExpense: 6000,
+  bankDeposit: 80000,
+  investments: 60000,
+  realEstateValue: 320000,
+  vehicleValue: 40000,
+  debt: 200000,
+  assets: 500000,
+  mortgageBalance: 180000,
+  carLoanBalance: 0,
+  consumerLoanBalance: 20000,
+  creditCardUsed: 0,
+  creditCardLimit: 50000,
+  loanCount: 1,
+  overdueCount: 0
+}
+
+const CREDIT_CODE_DIRECTORY = [
+  {
+    creditCode: '91460000MA5TXXXXXX',
+    userType: 'enterprise',
+    organization: '海南科技发展有限公司',
+    realName: '李四',
+    industry: '信息技术',
+    phone: '13800000001',
+    email: 'contact@hainantech.cn',
+    address: '海南省海口市美兰区',
+    businessType: 'enterprise-full'
+  },
+  {
+    creditCode: '91460000GOV0000001',
+    userType: 'government',
+    organization: '海口市市场监督管理局',
+    realName: '王敏',
+    industry: '公共管理',
+    phone: '13900000002',
+    email: 'gov@hainan.gov.cn',
+    address: '海南省海口市龙华区',
+    businessType: 'government-supervision'
+  },
+  {
+    creditCode: '91460000RES0000001',
+    userType: 'research',
+    organization: '海南省金融科技实验室',
+    realName: '周航',
+    industry: '科研服务',
+    phone: '13700000003',
+    email: 'research@hainan.edu.cn',
+    address: '海南省海口市国家高新区',
+    businessType: 'research-full'
+  }
+]
+
 function safeParse(value, fallback) {
   if (!value) {
     return fallback
@@ -21,6 +94,30 @@ function safeParse(value, fallback) {
   } catch {
     return fallback
   }
+}
+
+export function normalizeCreditCode(value) {
+  return (value || '').trim().toUpperCase().replace(/\s+/g, '')
+}
+
+export function createDefaultPersonalInfo(name = DEFAULT_PERSONAL_INFO.name) {
+  return {
+    ...DEFAULT_PERSONAL_INFO,
+    name
+  }
+}
+
+export function findCreditCodeProfile(userType, creditCode) {
+  const normalizedCode = normalizeCreditCode(creditCode)
+  if (!normalizedCode) {
+    return null
+  }
+
+  return (
+    CREDIT_CODE_DIRECTORY.find(
+      item => item.userType === userType && item.creditCode === normalizedCode
+    ) || null
+  )
 }
 
 export function getRegisteredUsers() {
@@ -52,11 +149,13 @@ export function registerUser(form) {
     username: form.username,
     password: form.password,
     userType: form.userType,
+    creditCode: normalizeCreditCode(form.creditCode),
     realName: form.realName,
     organization: form.organization,
     email: form.email,
     phone: form.phone,
     industry: form.industry || '',
+    address: form.address || '',
     businessType: preset?.value || '',
     businessLabel: preset?.label || `${getUserTypeText(form.userType)}默认方案`,
     featureKeys,
@@ -76,7 +175,7 @@ export function updateUserPassword({ username, userType, phone, newPassword }) {
   )
 
   if (targetIndex === -1) {
-    throw new Error('未找到匹配账号，请检查用户名、用户类型和手机号')
+    throw new Error('未找到匹配账号，请检查用户名、用户类型和手机号码')
   }
 
   users[targetIndex] = {
@@ -91,15 +190,22 @@ export function updateUserPassword({ username, userType, phone, newPassword }) {
 
 export function createDefaultProfile({ userType, username, realName, organization }) {
   const featureKeys = getDefaultFeatureKeys(userType)
+
   return {
     username,
     realName: realName || username,
     organization: organization || '',
     userType,
+    creditCode: '',
+    address: '',
     businessType: '',
     businessLabel: `${getUserTypeText(userType)}默认方案`,
     featureKeys,
-    activeFeatureKey: getDefaultFeature(userType, featureKeys)
+    activeFeatureKey: getDefaultFeature(userType, featureKeys),
+    personalInfo:
+      userType === 'personal'
+        ? createDefaultPersonalInfo(realName || username)
+        : null
   }
 }
 
@@ -113,13 +219,19 @@ export function normalizeUserProfile(userRecord) {
     realName: userRecord.realName || userRecord.username,
     organization: userRecord.organization || '',
     userType: userRecord.userType,
+    creditCode: normalizeCreditCode(userRecord.creditCode),
     industry: userRecord.industry || '',
     phone: userRecord.phone || '',
     email: userRecord.email || '',
+    address: userRecord.address || '',
     businessType: userRecord.businessType || '',
     businessLabel: userRecord.businessLabel || `${getUserTypeText(userRecord.userType)}默认方案`,
     featureKeys,
-    activeFeatureKey: getDefaultFeature(userRecord.userType, featureKeys)
+    activeFeatureKey: getDefaultFeature(userRecord.userType, featureKeys),
+    personalInfo:
+      userRecord.userType === 'personal'
+        ? createDefaultPersonalInfo(userRecord.realName || userRecord.username)
+        : null
   }
 }
 

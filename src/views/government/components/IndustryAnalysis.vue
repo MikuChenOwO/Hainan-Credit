@@ -96,21 +96,21 @@
 
     <!-- 行业风险对比图表 -->
     <el-row :gutter="20" class="chart-row">
-      <el-col :span="12">
-        <el-card>
+      <el-col :span="14">
+        <el-card class="chart-card">
           <template #header>
             <span>行业风险对比</span>
           </template>
-          <div id="industryComparisonChart" style="width: 100%; height: 400px;"></div>
+          <div id="industryComparisonChart" class="comparison-chart"></div>
         </el-card>
       </el-col>
       
-      <el-col :span="12">
-        <el-card>
+      <el-col :span="10">
+        <el-card class="chart-card">
           <template #header>
             <span>风险趋势分析</span>
           </template>
-          <div id="riskTrendChart" style="width: 100%; height: 400px;"></div>
+          <div id="riskTrendChart" class="trend-chart"></div>
         </el-card>
       </el-col>
     </el-row>
@@ -204,7 +204,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import * as echarts from 'echarts'
 
 export default {
@@ -278,6 +278,8 @@ export default {
 
     const detailVisible = ref(false)
     const currentIndustry = ref(null)
+    const comparisonChart = ref(null)
+    const trendChart = ref(null)
 
     const handleSearch = () => {
       // 模拟搜索逻辑
@@ -300,7 +302,8 @@ export default {
       // 行业风险对比图
       const comparisonChartDom = document.getElementById('industryComparisonChart')
       if (comparisonChartDom) {
-        const comparisonChart = echarts.init(comparisonChartDom)
+        comparisonChart.value?.dispose()
+        comparisonChart.value = echarts.init(comparisonChartDom)
         const comparisonOption = {
           tooltip: {
             trigger: 'axis'
@@ -348,13 +351,14 @@ export default {
             }
           ]
         }
-        comparisonChart.setOption(comparisonOption)
+        comparisonChart.value.setOption(comparisonOption)
       }
 
       // 风险趋势分析图
       const trendChartDom = document.getElementById('riskTrendChart')
       if (trendChartDom) {
-        const trendChart = echarts.init(trendChartDom)
+        trendChart.value?.dispose()
+        trendChart.value = echarts.init(trendChartDom)
         const trendOption = {
           tooltip: {
             trigger: 'axis'
@@ -391,18 +395,24 @@ export default {
             }
           ]
         }
-        trendChart.setOption(trendOption)
+        trendChart.value.setOption(trendOption)
       }
+    }
 
-      // 响应式调整
-      window.addEventListener('resize', () => {
-        if (comparisonChartDom) comparisonChart.resize()
-        if (trendChartDom) trendChart.resize()
-      })
+    const handleResize = () => {
+      comparisonChart.value?.resize()
+      trendChart.value?.resize()
     }
 
     onMounted(() => {
       setTimeout(initCharts, 100)
+      window.addEventListener('resize', handleResize)
+    })
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', handleResize)
+      comparisonChart.value?.dispose()
+      trendChart.value?.dispose()
     })
 
     return {
@@ -465,6 +475,20 @@ export default {
 
 .chart-row {
   margin-bottom: 20px;
+}
+
+.chart-card {
+  height: 100%;
+}
+
+.comparison-chart,
+.trend-chart {
+  width: 100%;
+  height: 360px;
+}
+
+.trend-chart {
+  min-height: 360px;
 }
 
 .detail-card {
